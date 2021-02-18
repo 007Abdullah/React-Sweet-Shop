@@ -56,7 +56,6 @@ function Signup() {
             console.log(error);
         });
 
-
     }
 
 
