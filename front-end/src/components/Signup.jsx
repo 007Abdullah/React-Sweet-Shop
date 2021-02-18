@@ -37,9 +37,6 @@ function Signup() {
             console.log(error);
         });
     }, [email])
-    useEffect(() => {
-
-    }, [])
     function hanldsubmit(event) {
         event.preventDefault();
         axios({

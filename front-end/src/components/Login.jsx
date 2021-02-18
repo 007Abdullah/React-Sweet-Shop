@@ -5,8 +5,12 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import './login.css'
 import axios from 'axios';
+import {
+    useHistory
+} from "react-router-dom";
 const url = 'http://localhost:5000'
 function Login() {
+    const history = useHistory();
     function hanldlogin(event) {
         event.preventDefault();
         axios({
@@ -19,6 +23,8 @@ function Login() {
         }).then((response) => {
             if (response.data.status === 200) {
                 alert(response.data.message)
+                history.push("./")
+
             } else {
                 alert(response.data.message);
             }
@@ -37,12 +43,12 @@ function Login() {
                             <label htmlFor="defaultFormLoginEmailEx" className="grey-text">
                                 Your email
                             </label>
-                            <input type="email" id="email" className="form-control" />
+                            <input type="email" id="email" className="form-control" placeholder="Enter Your Email" />
                             <br />
                             <label htmlFor="defaultFormLoginPasswordEx" className="grey-text">
                                 Your password
                             </label>
-                            <input type="password" id="password" className="form-control" />
+                            <input type="password" id="password" className="form-control" placeholder="Enter Your Password" />
                             <div className="text-center mt-4">
                                 <MDBBtn color="indigo" type="submit">Login</MDBBtn>
                             </div>
