@@ -38,7 +38,7 @@ api.post("/signup", (req, res, next) => {
                 newUser.save((err, data) => {
                     if (!err) {
                         res.send({
-                            message: "User Create",
+                            message: "SignUp Successfully goto Login Page",
                             status: 200
                         });
                     }

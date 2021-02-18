@@ -5,13 +5,16 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import './signup.css'
 import axios from "axios";
+import {
+    useHistory
+} from "react-router-dom";
 
 const url = 'http://localhost:5000'
 function Signup() {
+
     const [email, setEmail] = useState('');
     const [errmessage, setErrmessage] = useState('');
-
-
+    var history = useHistory();
     useEffect(() => {
         axios({
             method: 'post',
@@ -22,10 +25,10 @@ function Signup() {
         }).then((response) => {
             if (response.data.status === 200) {
                 if (response.data.isFound) {
-                    setErrmessage("already exit")
+                    setErrmessage("Email Already exit")
                 }
-                else{
-                    setErrmessage("Email is available")
+                else {
+                    setErrmessage("Email is Available")
                 }
             } else {
                 alert(response.data.message);
@@ -34,28 +37,34 @@ function Signup() {
             console.log(error);
         });
     }, [email])
+    useEffect(() => {
 
+    }, [])
     function hanldsubmit(event) {
         event.preventDefault();
         axios({
             method: 'post',
             url: url + '/auth/signup',
             data: {
-                name:document.getElementById('name').value,
-                email:email,
-                phone:document.getElementById('phone').value,
-                password:document.getElementById('password').value
+                name: document.getElementById('name').value,
+                email: email,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value
             }, withCredentials: true
         }).then((response) => {
             if (response.data.status === 200) {
-                alert(response.data.message)
+                document.getElementById('show-result').innerHTML = response.data.message
             } else {
-                alert(response.data.message);
+                // alert(response.data.message);
+                document.getElementById('show-result').innerHTML = response.data.message
             }
         }).catch((error) => {
             console.log(error);
         });
+    }
 
+    function handleClick() {
+        history.push("./Login")
     }
 
 
@@ -71,25 +80,23 @@ function Signup() {
                             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
                                 Your name
                              </label>
-                            <input type="text" className="form-control" required id="name"/>
+                            <input type="text" className="form-control" required id="name" placeholder="Your Name" />
                             <br />
                             <label htmlFor="defaultFormRegisterEmailEx" className="grey-text" >
                                 Your email
                             </label>
-                            <input type="email" className="form-control" required onChange={(e) => setEmail(e.target.value)}  />
-                            <br />
-                            {errmessage}
-
-
+                            <input type="email" className="form-control" placeholder="Your Email" required onChange={(e) => setEmail(e.target.value)} />
+                            <h5 style={{ textAlign: "right" }}>{errmessage}</h5>
                             <label htmlFor="defaultFormRegisterConfirmEx" className="grey-text">
                                 Phone
                             </label>
-                            <input type="text" className="form-control" required id="phone" />
+                            <input type="text" className="form-control" required id="phone" placeholder="Your Number" />
                             <br />
                             <label htmlFor="defaultFormRegisterPasswordEx" className="grey-text" >
                                 Your password
                             </label>
-                            <input type="password" className="form-control" required  id="password"/>
+                            <input type="password" className="form-control" required id="password" placeholder="Write Your Password" />
+                            <span style={{cursor: "pointer",color:"blue"}} onClick={handleClick}>I Already have an account</span>
                             <div className="text-center mt-4">
                                 <MDBBtn color="unique" type="submit">
                                     Register
@@ -99,7 +106,11 @@ function Signup() {
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
-);
+
+            {/* {<span style={{ textAlign: "center", fontWeight: "bolder" }} id="show-result"></span>} */}
+
+
+            <center><span style={{ textAlign: "center", fontWeight: "bolder" }} id="show-result"></span></center>
         </div>
     )
 }
