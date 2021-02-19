@@ -6,24 +6,25 @@ function Home() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/profile`)
-            .then(res => {
-                console.log(res);
-                setData(res)
-            });
+        axios({
+            method: 'get',
+            url: "http://localhost:5000/profile",
+            credentials: true,
+        }).then((response) => {
+            console.log(response);
+        //    response.data.profile.name
+           
+        }, (error) => {
+            console.log(error.message);
+        });
 
     }, [])
 
     return (
         <>
             <h1>Home</h1>
-            {data.map(post => (
-
-                <div className="checks" key={post.id}>
-                    <h1>{post.name}</h1>
-                </div>
-            ))
-            }
+            
+           
 
         </>
     )

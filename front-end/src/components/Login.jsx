@@ -22,7 +22,7 @@ function Login() {
             }, withCredentials: true
         }).then((response) => {
             if (response.data.status === 200) {
-                alert(response.data.message)
+                // alert(response.data.message)
                 history.push("./")
 
             } else {
