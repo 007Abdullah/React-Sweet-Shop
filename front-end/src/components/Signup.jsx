@@ -63,10 +63,6 @@ function Signup() {
     function handleClick() {
         history.push("./Login")
     }
-
-
-
-
     return (
         <div className="center">
             <MDBContainer>
@@ -103,10 +99,6 @@ function Signup() {
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
-
-            {/* {<span style={{ textAlign: "center", fontWeight: "bolder" }} id="show-result"></span>} */}
-
-
             <center><span style={{ textAlign: "center", fontWeight: "bolder" }} id="show-result"></span></center>
         </div>
     )

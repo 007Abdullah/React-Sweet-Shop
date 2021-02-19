@@ -23,8 +23,7 @@ function Login() {
         }).then((response) => {
             if (response.data.status === 200) {
                 // alert(response.data.message)
-                history.push("./")
-
+                history.push("./Dashboard");
             } else {
                 alert(response.data.message);
             }
