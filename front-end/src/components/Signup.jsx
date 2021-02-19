@@ -89,7 +89,7 @@ function Signup() {
                                 Your password
                             </label>
                             <input type="password" className="form-control" required id="password" placeholder="Write Your Password" />
-                            <span style={{cursor: "pointer",color:"blue"}} onClick={handleClick}>I Already have an account</span>
+                            <span style={{ cursor: "pointer", color: "blue" }} onClick={handleClick}>I Already have an account</span>
                             <div className="text-center mt-4">
                                 <MDBBtn color="unique" type="submit">
                                     Register
