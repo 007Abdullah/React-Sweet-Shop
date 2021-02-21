@@ -153,6 +153,7 @@ api.post("/login", (req, res, next) => {
 
                     res.send({
                         status: 200,
+                        token: token,
                         message: "Login Success",
                         user: {
                             name: user.name,
@@ -160,6 +161,7 @@ api.post("/login", (req, res, next) => {
                             phone: user.phone,
                         }
                     });
+                    
                 } else {
                     console.log("not matched");
                     res.send({

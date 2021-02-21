@@ -8,9 +8,16 @@ import axios from 'axios';
 import {
     useHistory
 } from "react-router-dom";
+import { useGlobalState, useGlobalStateUpdate } from './../context/globalContext'
+
+
 const url = 'http://localhost:5000'
 function Login() {
     const history = useHistory();
+
+    const globalState = useGlobalState();
+    const setGlobalState = useGlobalStateUpdate();
+
     function hanldlogin(event) {
         event.preventDefault();
         axios({
@@ -24,6 +31,10 @@ function Login() {
             if (response.data.status === 200) {
                 // alert(response.data.message)
                 history.push("./Dashboard");
+
+                setGlobalState(prev => {
+                    return { ...prev, user: response.data.user, loginStatus: true, token: response.data.token }
+                })
             } else {
                 alert(response.data.message);
             }
@@ -55,6 +66,8 @@ function Login() {
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
+
+            {'===>' + JSON.stringify(globalState)}
         </div>
     )
 }
