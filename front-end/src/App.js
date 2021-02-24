@@ -13,6 +13,7 @@ import {
   Link, Redirect
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
+import AdminDashboard from "./components/adminDashboard";
 
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import { useGlobalState } from './context/globalContext'
@@ -24,23 +25,26 @@ function App() {
       <Router>
         <nav>
           <Navbar bg="dark" variant="dark">
-            <Nav className="mr-auto">
-              {(globalState.loginStatus === true) ?
-                <>
+            {(globalState.loginStatus === true) ?
+              <>
+                <Nav className="mr-auto">
+                  <Nav.Link href="/"><Link to="/">Dashboard</Link></Nav.Link>
+                  <Nav.Link href="/"><Link to="/profile">profile</Link></Nav.Link>
+                </Nav>
+                <Form inline>
+                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                  <Button variant="outline-info">Search</Button>
+                </Form>
+              </>
+              :
+              <>
+                <Nav className="mr-auto">
                   <Nav.Link href="/"><Link to="/">Home</Link></Nav.Link>
-                  <Nav.Link href="/"><Link to="/dashboard">Dashboard</Link></Nav.Link>
-                </>
-                :
-                <>
                   <Nav.Link href="/Login"><Link to="/login">Login</Link></Nav.Link>
                   <Nav.Link href="/Signup"><Link to="/signup">Signup</Link></Nav.Link>
-                </>
-              }
-            </Nav>
-            <Form inline>
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-              <Button variant="outline-info">Search</Button>
-            </Form>
+                </Nav>
+              </>
+            }
 
 
           </Navbar>
@@ -49,7 +53,7 @@ function App() {
 
 
         <Switch>
-          {(globalState.loginStatus === false) ?
+          {(globalState.role === null) ?
             <>
               <Route exact path="/">
                 <Home />
@@ -67,7 +71,7 @@ function App() {
             </>
             : null}
 
-          {(globalState.loginStatus === true) ?
+          {(globalState.role === "user") ?
             <>
               <Route exact path="/">
                 <Dashboard />
@@ -83,6 +87,20 @@ function App() {
 
             </>
             : null}
+
+          {(globalState.role === "admin") ?
+            <>
+              <Route exact path="/">
+                <AdminDashboard />
+              </Route>
+              
+              <Route path="*">
+                <Redirect to="/" />
+              </Route>
+            </>
+            : null}
+
+
 
 
         </Switch>
