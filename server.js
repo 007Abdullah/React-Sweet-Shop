@@ -7,7 +7,7 @@ var morgan = require("morgan");
 var jwt = require('jsonwebtoken');
 var http = require("http");
 var path = require('path')
-var {userModel} = require("./dbrepo/models");
+var { userModel } = require("./dbrepo/models");
 
 var { SERVER_SECRET } = require("./core/index");
 
@@ -84,10 +84,11 @@ app.use(function (req, res, next) {
 app.get("/profile", (req, res, next) => {
     console.log(req.body);
 
-    userModel.findById(req.body.jToken.id, 'name email phone createdOn', function (err, doc) {
+    userModel.findById(req.body.jToken.id, 'name email phone createdOn role', function (err, doc) {
         if (!err) {
             res.send({
-                profile: doc
+                profile: doc,
+                status: 200
             })
 
         } else {

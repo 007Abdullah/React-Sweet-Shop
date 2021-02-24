@@ -136,7 +136,8 @@ api.post("/login", (req, res, next) => {
                         id: user._id,
                         name: user.name,
                         email: user.email,
-                        phone: user.phone
+                        phone: user.phone,
+                        role: user.role
                     }, SERVER_SECRET);
 
                     res.cookie('jToken', token, {
@@ -159,9 +160,10 @@ api.post("/login", (req, res, next) => {
                             name: user.name,
                             email: user.email,
                             phone: user.phone,
+                            role: user.role
                         }
                     });
-                    
+
                 } else {
                     console.log("not matched");
                     res.send({
@@ -181,4 +183,14 @@ api.post("/login", (req, res, next) => {
     });
 });
 
+api.post("/logout", (req, res, next) => {
+    res.cookie("jToken", "", {
+        maxAge: 86_400_000,
+        httpOnly: true
+    });
+    res.send({
+        status: 200,
+        message: "Logout"
+    });
+});
 module.exports = api;

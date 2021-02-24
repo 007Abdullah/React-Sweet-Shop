@@ -93,7 +93,7 @@ function App() {
               <Route exact path="/">
                 <AdminDashboard />
               </Route>
-              
+
               <Route path="*">
                 <Redirect to="/" />
               </Route>

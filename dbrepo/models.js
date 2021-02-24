@@ -33,6 +33,7 @@ var userSchema = new mongoose.Schema({
     "email": String,
     "password": String,
     "phone": String,
+    "role": { "type": String, "default": "user" },
     "createdOn": { "type": Date, "Default": Date.now },
     "activeSince": Date
 });
