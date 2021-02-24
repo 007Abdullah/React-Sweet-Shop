@@ -1,46 +1,55 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useGlobalState } from "./../context/globalContext";
+import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext";
+import {
+    useHistory
+} from "react-router-dom";
 // const url = 'http://localhost:5000'
 
 function Dashboard() {
 
-    const globalState = useGlobalState();
-
     let url = 'http://localhost:5000'
-    let [userData, setUserData] = useState()
-    useEffect(() => {
+    const globalState = useGlobalState();
+    const setGlobalState = useGlobalStateUpdate();
+    let history = useHistory()
+
+    // let [userData, setUserData] = useState()
+    // useEffect(() => {
+    //     axios({
+    //         method: 'get',
+    //         url: url + '/profile',
+    //         withCredentials: true
+    //     }).then((response) => {
+    //         // alert(response.data.message)
+    //         console.log(response.data.profile)
+    //         setUserData(response.data.profile)
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
+    // }, [])
+
+    function logout() {
         axios({
-            method: 'get',
-            url: url + '/profile',
-            withCredentials: true
+            method: 'post',
+            url: url + '/auth/logout',
+            withCredentials: true,
         }).then((response) => {
-            // alert(response.data.message)
-            console.log(response.data.profile)
-            setUserData(response.data.profile)
-        }).catch((error) => {
-            console.log(error);
+            console.log(response);
+            history.push('./login')
+        }, (error) => {
+            console.log(error.message);
         });
-    }, [])
-    console.log(userData)
+
+    }
     return (
         <>
-
-            {userData ?
+            <button onClick={logout}>Logout</button>
+            <h1>Dashboard</h1>
+            {globalState.user ?
                 <div>
-                    <h2 style={{ textAlign: 'center' }}>WelCome , {userData.name}</h2>
+                    <h2>{globalState.user.name}</h2>
                 </div> : null}
 
-            {'===>' + JSON.stringify(globalState)}
-
-
-            {/* {globalState.map((eachItem, i) => {
-                return <div key={i} id="card">
-                    <p>{eachItem.name}</p>
-                </div>
-
-            })
-            } */}
         </>
     )
 }

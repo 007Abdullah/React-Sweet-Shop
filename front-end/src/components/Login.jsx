@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
@@ -14,7 +14,7 @@ import { useGlobalState, useGlobalStateUpdate } from './../context/globalContext
 const url = 'http://localhost:5000'
 function Login() {
     const history = useHistory();
-
+    let [show, setShow] = useState()
     const globalState = useGlobalState();
     const setGlobalState = useGlobalStateUpdate();
 
@@ -31,12 +31,14 @@ function Login() {
             if (response.data.status === 200) {
                 // alert(response.data.message)
                 history.push("./Dashboard");
-
                 setGlobalState(prev => {
                     return { ...prev, user: response.data.user, loginStatus: true, token: response.data.token }
                 })
+
             } else {
-                alert(response.data.message);
+                history.push("/login");
+                // alert(response.data.message);
+                setShow(response.data.message)
             }
         }).catch((error) => {
             console.log(error);
@@ -66,6 +68,10 @@ function Login() {
                     </MDBCol>
                 </MDBRow>
             </MDBContainer>
+
+            {show ? <div className="alert alert-danger" role="alert">
+                {show}
+            </div> : null}
 
             {'===>' + JSON.stringify(globalState)}
         </div>

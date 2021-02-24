@@ -10,7 +10,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link, Redirect
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 
@@ -25,33 +25,65 @@ function App() {
         <nav>
           <Navbar bg="dark" variant="dark">
             <Nav className="mr-auto">
-              <Nav.Link href="/"><Link to="/">Home</Link></Nav.Link>
-              <Nav.Link href="/Login"><Link to="/login">Login</Link></Nav.Link>
-              <Nav.Link href="/Signup"><Link to="/signup">Signup</Link></Nav.Link>
+              {(globalState.loginStatus === true) ?
+                <>
+                  <Nav.Link href="/"><Link to="/">Home</Link></Nav.Link>
+                  <Nav.Link href="/"><Link to="/dashboard">Dashboard</Link></Nav.Link>
+                </>
+                :
+                <>
+                  <Nav.Link href="/Login"><Link to="/login">Login</Link></Nav.Link>
+                  <Nav.Link href="/Signup"><Link to="/signup">Signup</Link></Nav.Link>
+                </>
+              }
             </Nav>
             <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />
               <Button variant="outline-info">Search</Button>
             </Form>
+
+
           </Navbar>
 
         </nav>
 
 
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
           {(globalState.loginStatus === false) ?
-            <Route path="/">
-              <Login />
-            </Route> :
-            <Route path="/">
-              <Dashboard />
-            </Route>}
+            <>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/signup">
+                <Signup />
+              </Route>
+
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="*">
+                <Redirect to="/" />
+              </Route>
+            </>
+            : null}
+
+          {(globalState.loginStatus === true) ?
+            <>
+              <Route exact path="/">
+                <Dashboard />
+              </Route>
+
+              <Route path="/home">
+                <Home />
+              </Route>
+
+              <Route path="*">
+                <Redirect to="/" />
+              </Route>
+
+            </>
+            : null}
+
 
         </Switch>
       </Router>

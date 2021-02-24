@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-
+import React, { useContext, useState, useEffect } from "react";
+import axios from 'axios'
 const GlobalStateContext = React.createContext()
 const GlobalStateUpdateContext = React.createContext()
 
@@ -10,8 +10,35 @@ export function GlobalStateProvider({ children }) {
     const [data, setData] = useState({
         user: null,
         loginStatus: false,
-        token: null
+        token: null,
+        cart: []
     })
+
+    useEffect(() => {
+        axios({
+            method: "get",
+            url: `http://localhost:5000/profile`,
+            withCredentials: true
+        }).then((res) => {
+            console.log("context response", res.data.profile);
+            if (res.data.status === 200) {
+                setData((prev) => ({
+                    ...prev,
+                    user: res.data.profile,
+                    loginStatus: true,
+                }))
+            }
+        }).catch((err) => {
+            console.log(err);
+            if (err) {
+                setData((prev) => ({ ...prev, loginStatus: false }));
+            }
+        })
+
+        return () => {
+            console.log("cleanup");
+        }
+    }, []);
 
     return (
         <GlobalStateContext.Provider value={data}>
