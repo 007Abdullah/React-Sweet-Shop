@@ -25,9 +25,9 @@ function AdminDashboard() {
                 <h1>Admin Dashboard</h1>
                 {/* // form to add product */}
 
-                <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-                    <div className="w-100 text-center mt-2">
-                        hdafadfas
+                <Container className="d-flex align-items-center justify-content-center">
+                    <div className="w-100">
+                       
                     </div>
 
                 </Container>

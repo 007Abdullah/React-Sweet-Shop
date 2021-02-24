@@ -59,7 +59,8 @@ app.use(function (req, res, next) {
                     id: decodedData.id,
                     name: decodedData.name,
                     email: decodedData.email,
-                    phone: decodedData.phone
+                    phone: decodedData.phone,
+                    role: decodedData.role
                 }, SERVER_SECRET)
 
                 res.cookie('jToken', token, {
