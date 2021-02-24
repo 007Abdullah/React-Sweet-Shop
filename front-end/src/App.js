@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import AdminDashboard from "./components/adminDashboard";
-
+import LogoutButton from './components/logoutButton';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import { useGlobalState } from './context/globalContext'
 function App() {
@@ -30,18 +30,20 @@ function App() {
                 <Nav className="mr-auto">
                   <Nav.Link href="/"><Link to="/">Dashboard</Link></Nav.Link>
                   <Nav.Link href="/"><Link to="/profile">profile</Link></Nav.Link>
+                  {/* <Nav.Link href="/"><Link to="/"><LogoutButton /></Link></Nav.Link> */}
                 </Nav>
                 <Form inline>
                   <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                   <Button variant="outline-info">Search</Button>
+                  <LogoutButton />
                 </Form>
               </>
               :
               <>
                 <Nav className="mr-auto">
                   <Nav.Link href="/"><Link to="/">Home</Link></Nav.Link>
-                  <Nav.Link href="/Login"><Link to="/login">Login</Link></Nav.Link>
-                  <Nav.Link href="/Signup"><Link to="/signup">Signup</Link></Nav.Link>
+                  <Nav.Link href="/login"><Link to="/login">Login</Link></Nav.Link>
+                  <Nav.Link href="/signup"><Link to="/signup">Signup</Link></Nav.Link>
                 </Nav>
               </>
             }
@@ -81,6 +83,7 @@ function App() {
                 <Home />
               </Route>
 
+
               <Route path="*">
                 <Redirect to="/" />
               </Route>
@@ -92,6 +95,9 @@ function App() {
             <>
               <Route exact path="/">
                 <AdminDashboard />
+              </Route>
+              <Route path="/home">
+                <LogoutButton />
               </Route>
 
               <Route path="*">

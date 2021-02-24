@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useGlobalStateUpdate } from "./../context/globalContext";
-
+import { Button } from "react-bootstrap";
 function LogoutButton() {
 
     let url = 'http://localhost:5000'
@@ -21,7 +21,7 @@ function LogoutButton() {
         });
 
     }
-    return (<button onClick={logout}>Logout</button>)
+    return (<Button variant="danger" onClick={logout}>Logout</Button>)
 }
 
 export default LogoutButton;

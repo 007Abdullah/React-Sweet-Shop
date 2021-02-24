@@ -4,8 +4,6 @@ import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext
 import {
     useHistory
 } from "react-router-dom";
-import data from "./products/productsitem";
-import Main from "./Cart/Main";
 import LogoutButton from "./logoutButton";
 
 function Dashboard() {
@@ -15,22 +13,19 @@ function Dashboard() {
     const setGlobalState = useGlobalStateUpdate();
 
     let history = useHistory()
-    const { products } = data
-
-    const onAdd = (product) => {
-
-    }
+    
 
     return (
         <>
-            <LogoutButton />            <h1>Dashboard</h1>
+            {/* <LogoutButton />            */}
+             <h1>Dashboard</h1>
             <div className="row1">
-                <Main products={products} onAdd={onAdd} />
-            </div>
+               
             {globalState.user ?
                 <div>
                     <h2>{globalState.user.name}</h2>
                 </div> : null}
+            </div>
 
 
             {'===>' + JSON.stringify(globalState)}

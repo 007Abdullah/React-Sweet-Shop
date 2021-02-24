@@ -4,8 +4,9 @@ import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext
 import {
     useHistory
 } from "react-router-dom";
-import data from "./products/productsitem";
 import LogoutButton from "./logoutButton";
+import { Container } from 'react-bootstrap'
+
 
 function AdminDashboard() {
 
@@ -14,23 +15,28 @@ function AdminDashboard() {
     const setGlobalState = useGlobalStateUpdate();
 
     let history = useHistory()
-    const { products } = data
 
-    const onAdd = (product) => {
 
-    }
- 
+
     return (
         <>
-            <LogoutButton />
-            <h1>Admin Dashboard</h1>
-           
+            <div>
 
-           {/* // form to add product */}
+                <h1>Admin Dashboard</h1>
+                {/* // form to add product */}
 
-           {/* list down product */}
-           
-           {'===>' + JSON.stringify(globalState)}
+                <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+                    <div className="w-100 text-center mt-2">
+                        hdafadfas
+                    </div>
+
+                </Container>
+
+
+                {/* list down product */}
+            </div>
+
+            {'===>' + JSON.stringify(globalState)}
 
         </>
     )
