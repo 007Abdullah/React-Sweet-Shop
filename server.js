@@ -108,7 +108,7 @@ app.post('/admindashboard', (req, res, next) => {
             status: 301
         });
     }
-    userModel.findOne({ email: req.body.email }, (err, user) => {
+    userModel.findById(req.body.jToken.id, 'email role', function (err, user) {
         if (!err) {
             if (user.role === "admin") {
                 adminModel.create({

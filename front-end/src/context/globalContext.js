@@ -11,7 +11,6 @@ export function GlobalStateProvider({ children }) {
         user: null,
         loginStatus: false,
         role: null,
-        cart: []
     })
 
     useEffect(() => {
@@ -22,7 +21,7 @@ export function GlobalStateProvider({ children }) {
         }).then((res) => {
             console.log("context response", res.data.profile);
             if (res.data.status === 200) {
-                
+
                 setData((prev) => ({
                     ...prev,
                     user: res.data.profile,
