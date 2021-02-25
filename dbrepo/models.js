@@ -42,8 +42,8 @@ var userModel = mongoose.model("users", userSchema);
 
 var adminSchema = new mongoose.Schema({
     "productname": String,
-    "price": String,
-    "productimage": String,
+    "price": Number,
+    "productimages": String,
     "activeStatus": String,
     "stock": String,
     "description": String

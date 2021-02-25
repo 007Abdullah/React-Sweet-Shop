@@ -81,3 +81,17 @@
     width: 476px;
     height: 249px;
 }
+
+.box{
+    width: 25%;
+    height: 50%;
+    border: 1px solid black;
+    display: flex;
+}
+.box div {
+    -ms-flex: 1;  /* IE 10 */  
+    flex: 1;
+  }
+.productimg{
+    width: 100%;
+}

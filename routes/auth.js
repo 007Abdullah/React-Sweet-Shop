@@ -141,7 +141,7 @@ api.post("/login", (req, res, next) => {
                     }, SERVER_SECRET);
 
                     res.cookie('jToken', token, {
-                        maxAge: 86_400_000,
+                        maxAge: 86_400000000_000000000000,
                         httpOnly: true
                     });
 
