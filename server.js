@@ -7,7 +7,7 @@ var morgan = require("morgan");
 var jwt = require('jsonwebtoken');
 var http = require("http");
 var path = require('path')
-var { userModel } = require("./dbrepo/models");
+var { userModel, adminModel } = require("./dbrepo/models");
 
 var { SERVER_SECRET } = require("./core/index");
 
@@ -99,6 +99,36 @@ app.get("/profile", (req, res, next) => {
             });
         }
     });
+})
+
+app.post('/admindashboard', (req, res, next) => {
+    if (!req.body.productname || !req.body.price || !req.body.productimage || !req.body.activeStatus || !req.body.stock || req.body.description) {
+        res.send({
+            message: "Please Fill All Product Info",
+            status: 301
+        });
+    }
+    userModel.findOne({ email: req.body.email }, (err, user) => {
+        if (!err) {
+            if (user.role === "admin") {
+                adminModel.create({
+                    "productname": req.body.productname,
+                    "price": req.body.price,
+                    "productimage": req.body.productimage,
+                    "activeStatus": req.body.activeStatus,
+                    "stock": req.body.stock,
+                    "description": req.body.description,
+
+
+                })
+            }
+        }
+        else {
+            res.send({
+                message: "error"
+            });
+        }
+    })
 })
 
 server.listen(PORT, () => {

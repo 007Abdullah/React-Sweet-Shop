@@ -40,9 +40,20 @@ var userSchema = new mongoose.Schema({
 
 var userModel = mongoose.model("users", userSchema);
 
+var adminSchema = new mongoose.Schema({
+    "productname": String,
+    "price": String,
+    "productimage": String,
+    "activeStatus": String,
+    "stock": String,
+    "description": String
+})
+
+var adminModel = mongoose.model("admin", adminSchema);
 
 module.exports = {
     userModel: userModel,
+    adminModel: adminModel
     // orderModel: orderModel
     // others
 }
