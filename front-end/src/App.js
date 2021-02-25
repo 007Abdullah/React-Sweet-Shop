@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 // import {
 //   MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBIcon
 // } from "mdbreact";
