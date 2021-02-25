@@ -67,7 +67,6 @@ function AdminDashboard() {
 
 
     }
-
     function upload(e, index) {
 
         var fileInput = document.getElementById("fileInput");
@@ -133,7 +132,7 @@ function AdminDashboard() {
     }
 
     console.log("Which data === >", images);
-
+    console.log("isma be check karwna han han merii jan", data)
     function check(event) {
         event.preventDefault();
     }

@@ -212,33 +212,57 @@ app.post('/admindashboard', (req, res, next) => {
     userModel.findById(req.body.jToken.id, 'email role', function (err, user) {
         if (!err) {
             if (user.role === "admin") {
-                adminModel.create({
+                var admindata = new adminModel({
                     "productname": req.body.productname,
                     "price": req.body.price,
                     "productimages": req.body.productimages,
                     "activeStatus": req.body.activeStatus,
                     "stock": req.body.stock,
                     "description": req.body.description
-                }, function (err, data) {
-                    if (err) {
+                })
+                admindata.save((err, data) => {
+                    if (!err) {
                         res.send({
-                            message: " DB ERROR",
-                            status: 404
-                        });
-                    }
-                    else if (data) {
-                        res.send({
+                            message: "Product Add",
                             status: 200,
-                            message: "Added",
                             data: data
                         });
-                    } else {
+                    }
+                    else {
+                        console.log(err);
                         res.send({
-                            message: "err",
+                            message: "User Create Error " + JSON.stringify(err),
                             status: 500
                         });
                     }
-                })
+                });
+                // adminModel.create({
+                //     "productname": req.body.productname,
+                //     "price": req.body.price,
+                //     "productimages": req.body.productimages,
+                //     "activeStatus": req.body.activeStatus,
+                //     "stock": req.body.stock,
+                //     "description": req.body.description
+                // }, function (err, data) {
+                //     if (err) {
+                //         res.send({
+                //             message: " DB ERROR",
+                //             status: 404
+                //         });
+                //     }
+                //     else if (data) {
+                //         res.send({
+                //             status: 200,
+                //             message: "Product Add",
+                //             data: data
+                //         });
+                //     } else {
+                //         res.send({
+                //             message: "err",
+                //             status: 500
+                //         });
+                //     }
+                // })
             } else {
                 res.send({
                     message: "Only Edit  Admin",
