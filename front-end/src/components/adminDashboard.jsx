@@ -9,7 +9,7 @@ import './admin.css';
 import fallback from './../images/image_1024.png';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import { Button, Col, Form, Container, Row } from "react-bootstrap";
-
+import Crousel from './Crousel'
 
 
 
@@ -173,14 +173,17 @@ function AdminDashboard() {
                                 Product Images
                             </label>
                             <div className="row justify-content-lg-between d-flex" style={{ border: '1px solid black' }}>
-
-                                {images.map((eachImage, index) => (
-                                    <form onSubmit={check}>
-                                        <div className="file-upload" key={index}>
-                                            <img src={eachImage} alt="FallBack" id="show_pic" />;
+                                <div className='col-3'>
+                                    {images.map((eachImage, index) => (
+                                        <form onSubmit={check}>
+                                            <div className="file-upload" key={index}>
+                                                <img src={eachImage} alt="FallBack" id="show_pic" />;
                                             <input type="file" onChange={(e) => { upload(e, index) }} id="fileInput" required />
-                                        </div>
-                                    </form>))}
+                                            </div>
+                                        </form>))}
+                                </div>
+
+
                                 {/* <div className="file-upload">
                                     <img src={fallback} alt="FallBack" id="show_pic1" />;
                                     <input type="file" onChange={previewFile} id="fileInput" required />
@@ -216,7 +219,7 @@ function AdminDashboard() {
                 </MDBRow>
             </MDBContainer>
 
-
+            <Crousel />
 
             {'===>' + JSON.stringify(globalState)}
         </div>
