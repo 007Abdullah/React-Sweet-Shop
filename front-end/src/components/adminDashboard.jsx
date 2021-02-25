@@ -6,9 +6,9 @@ import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext
 import {
     useHistory
 } from "react-router-dom";
-import { Container, Form, Col, Button, Row } from 'react-bootstrap'
+// import { Container, Form, Col, Button, Row } from 'react-bootstrap'
 import './admin.css';
-
+import fallback from './../images/image_1024.png';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import { Button, Col, Form, Container, Row } from "react-bootstrap";
 
@@ -20,11 +20,11 @@ let url = 'http://localhost:5000'
 
 function AdminDashboard() {
     const [data, setData] = useState([]);
+    const [images, setImages] = useState([fallback, fallback, fallback]);
     const globalState = useGlobalState();
     // const setGlobalState = useGlobalStateUpdate();
     const productname = useRef();
     const price = useRef();
-    const productimg = useRef();
     const activeStatus = useRef();
     const stock = useRef();
     const description = useRef();
@@ -43,10 +43,11 @@ function AdminDashboard() {
             data: {
                 productname: productname.current.value,
                 price: price.current.value,
-                productimage: productimg.current.value,
+                productimages: images,
                 activeStatus: activeStatus.current.value,
                 stock: stock.current.value,
-                description: description.current.value
+                description: description.current.value,
+                // ["http://sdfsdfsdfsf", "wwefwfwef"]
             }, withCredentials: true
         }).then((response) => {
             if (response.data.status === 200) {
@@ -65,9 +66,59 @@ function AdminDashboard() {
         console.log(data)
     }
 
+    function upload() {
+        var fileInput = document.getElementById("fileInput");
 
+        console.log("fileInput: ", fileInput);
+        console.log("fileInput: ", fileInput.files[0]);
 
+        let formData = new FormData();
+        formData.append("myFile", fileInput.files[0]);
 
+        formData.append("myFile", fileInput.files[0]);
+        formData.append("myName", "malik");
+        formData.append("myDetails",
+            JSON.stringify({
+                "subject": "Science",   // this is how you send a json object along with file, you need to stringify (ofcourse you need to parse it back to JSON on server) your json Object since append method only allows either USVString or Blob(File is subclass of blob so File is also allowed)
+                "year": "2021"
+            })
+        );
+
+        axios({
+            method: 'post',
+            url: "http://localhost:5000/upload",
+            data: formData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+            .then(res => {
+                console.log(`upload Success` + res.data);
+                alert("upload Success")
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+    }
+
+    function previewFile(e, index) {
+        console.log("fffffffffffffff: ", e.target);
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            // convert image file to base64 string
+            setImages(prev => {
+                prev[index] = reader.result;
+                return [].concat(prev)
+            });
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    console.log("Which data === >", images);
 
 
 
@@ -77,7 +128,7 @@ function AdminDashboard() {
             <MDBContainer>
                 <MDBRow>
                     <MDBCol md="6">
-                        <form >
+                        <form onSubmit={handlsubmit}>
                             <p className="h4 text-center mb-4">Product Add</p>
                             <label htmlFor="defaultFormLoginEmailEx" className="black-text">
                                 Product Name
@@ -104,9 +155,34 @@ function AdminDashboard() {
                             <label htmlFor="defaultFormLoginPasswordEx" className="black-text">
                                 Product Images
                             </label>
-                            <input type="file" className="form-control" />
-                            <input type="file" className="form-control" />
-                            <input type="file" className="form-control" />
+                            <div className="row justify-content-lg-between d-flex" style={{ border: '1px solid black' }}>
+
+                                {images.map((eachImage, index) => (<div className="file-upload" key={index}>
+                                    <img src={eachImage} alt="FallBack" id="show_pic" />;
+                                    <input type="file" onChange={(e) => { previewFile(e, index) }} id="fileInput" required />
+                                </div>))}
+                                {/* <div className="file-upload">
+                                    <img src={fallback} alt="FallBack" id="show_pic1" />;
+                                    <input type="file" onChange={previewFile} id="fileInput" required />
+                                </div>
+                                <div className="file-upload">
+                                    <img src={fallback} alt="FallBack" id="show_pic2" />;
+                                    <input type="file" onChange={previewFile} id="fileInput" required />
+                                </div> */}
+                                {/* <div className="file-upload">
+                                <img src={fallback} alt="FallBack" id="show_pic" />;
+                                <input type="file" onChange={previewFile} id="fileInput" required />
+                                </div>
+                                <div className="file-upload">
+                                <img src={fallback} alt="FallBack" id="show_pic" />;
+                                <input type="file" onChange={previewFile} id="fileInput" required />
+                                </div>
+                                <div className="file-upload">
+                                <img src={fallback} alt="FallBack" id="show_pic" />;
+                                <input type="file" onChange={previewFile} id="fileInput" required />
+                                </div> */}
+                            </div>
+
                             <label htmlFor="defaultFormLoginPasswordEx" className="black-text">
                                 Product Description
                             </label>
@@ -124,137 +200,6 @@ function AdminDashboard() {
 
             {'===>' + JSON.stringify(globalState)}
         </div>
-
-        // <div>
-        //     <h1>Product Add</h1>
-        //     <Container fluid="md">
-        //         <Row className="justify-content-md-center">
-        //             <Form onSubmit="" className="justify-content-md-center">
-        //                 <Form.Row>
-        //                     <Form.Group as={Col} controlId="formGridEmail">
-        //                         <Form.Label>Product Name</Form.Label>
-        //                         <Form.Control type="name" placeholder="Product Name" required />
-        //                     </Form.Group>
-
-        //                     <Form.Group as={Col} controlId="formGridPassword">
-        //                         <Form.Label>Price</Form.Label>
-        //                         <Form.Control type="text" placeholder="Price" required />
-        //                     </Form.Group>
-        //                 </Form.Row>
-
-        //                 <Form.Group controlId="formGridAddress1">
-        //                     <Form.Label>Choose Product Image</Form.Label>
-        //                     <Form.Control type="url" placeholder="Product URL" required />
-        //                 </Form.Group>
-
-        //                 <Form.Group controlId="formGridAddress2">
-        //                     <Form.Label>Description</Form.Label>
-        //                     <Form.Control type="text" placeholder="Description" required />
-        //                 </Form.Group>
-
-        //                 <Form.Row>
-        //                     <Form.Group as={Col} controlId="formGridPassword">
-        //                         <Form.Label>Quantity</Form.Label>
-        //                         <Form.Control type="text" placeholder="Quantity" required />
-        //                     </Form.Group>
-
-        //                     <Form.Group as={Col} controlId="formGridEmail">
-        //                         <Form.Label>Active Status</Form.Label>
-        //                         <Form.Control type="name" placeholder="Active Status" required />
-        //                     </Form.Group>
-        //                 </Form.Row>
-
-        //                 <Button variant="primary" type="submit">Submit</Button>
-        //             </Form>
-        //         </Row>
-        //     </Container>
-
-        // </div>
-
-
-
-        // <div>
-        //     <h1>Admin Dashboard</h1>
-        //     <Container fluid="md">
-        //         <Row className="justify-content-md-center">
-        //             <Form onSubmit={handlsubmit} >
-        //                 <Form.Row>
-        //                     <Form.Group as={Col}>
-        //                         <Form.Label>Product Name</Form.Label>
-        //                         <Form.Control type="name" placeholder="Enter Name" ref={productname} required />
-        //                     </Form.Group>
-
-        //                     <Form.Group as={Col}>
-        //                         <Form.Label>Price</Form.Label>
-        //                         <Form.Control type="text" placeholder="Price" ref={price} required />
-        //                     </Form.Group>
-        //                 </Form.Row>
-
-        //                 <Form.Group controlId="formGridAddress1">
-        //                     <Form.Label>Product Image</Form.Label>
-        //                     <Form.Control type="url" placeholder="Image Url" ref={productimg} required />
-        //                 </Form.Group>
-
-        //                 <Form.Row>
-        //                     <Form.Group as={Col}>
-        //                         <Form.Label>Active Status</Form.Label>
-        //                         <Form.Control type="name" placeholder="Active Status" ref={activeStatus} required />
-        //                     </Form.Group>
-
-        //                     <Form.Group as={Col}>
-        //                         <Form.Label>Stock</Form.Label>
-        //                         <Form.Control type="text" placeholder="Stock" ref={stock} required />
-        //                     </Form.Group>
-        //                 </Form.Row>
-
-        //                 <Form.Group controlId="formGridAddress2">
-        //                     <Form.Label>Description</Form.Label>
-        //                     <Form.Control placeholder="Description" ref={description} required />
-        //                 </Form.Group>
-
-        //                 <Button variant="primary" type="submit">
-        //                     Add
-        //                     </Button>
-        //             </Form>
-
-        //         </Row>
-        //     </Container>
-
-        //     {data.map((eachItem, i) => {
-        //         return (
-        //             <div key={eachItem.id} className="container">
-        //                 <div className="row">
-        //                     <div className="box">
-        //                         <div>
-        //                             <img src={eachItem.productimage} alt={eachItem.name} className="productimg" />
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //             </div>)
-        //     })}
-
-        //     <div className="container-lg border border-primary">
-        //         <div className="row d-flex justify-content-end ">
-        //             <div className="col-3 border border-dark" >
-        //                 <h1>asdfahshfjas</h1>
-        //             </div>
-        //             <div className="col-3 border border-dark" >
-        //                 <h1>asdfahshfjas</h1>
-        //             </div>
-        //             <div className="col-3 border border-dark" >
-        //                 <h1>asdfahshfjas</h1>
-        //             </div>
-        //             <div className="col-3 border border-dark" >
-        //                 <h1>asdfahshfjas</h1>
-        //             </div>
-        //             <div className="col-3 border border-dark" >
-        //                 <h1>asdfahshfjas</h1>
-        //             </div>
-        //         </div>
-        //     </div >
-
-        // </div >
-
 
 
     )
