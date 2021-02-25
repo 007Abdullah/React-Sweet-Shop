@@ -31,14 +31,17 @@ var upload = multer({ storage: storage })
 
 
 
-var serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT);
+var serviceAccount = {
+    "sajhfjsadhfkjsadhfkjashkj"
+}
+
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: process.env.DATABASE_URL
 });
 
-const bucket = admin.storage().bucket(process.env.bucket);
+const bucket = admin.storage().bucket(process.env.BUCKET);
 
 
 app.use(bodyParser.json());
@@ -48,6 +51,7 @@ app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
 }));
+
 
 app.use(morgan('dev'));
 
@@ -160,8 +164,10 @@ app.post("/upload", upload.any(), (req, res, next) => {  // never use upload.sin
                 }).then((urlData, err) => {
                     if (!err) {
                         console.log("public downloadable url: ", urlData[0]) // this is public downloadable url 
-                        res.send(urlData[0]);
+                        // res.send(urlData[0]);
+                        console.log("===================>", urlData[0]);
 
+                        res.send("Ok");
                         // // delete file from folder before sending response back to client (optional but recommended)
                         // // optional because it is gonna delete automatically sooner or later
                         // // recommended because you may run out of space if you dont do so, and if your files are sensitive it is simply not safe in server folder
@@ -184,7 +190,7 @@ app.post("/upload", upload.any(), (req, res, next) => {  // never use upload.sin
 
 
 app.post('/admindashboard', (req, res, next) => {
-    if (!req.body.productname || !req.body.price || !req.body.productimage || !req.body.activeStatus || !req.body.stock || !req.body.description) {
+    if (!req.body.productname || !req.body.price || !req.body.productimages || !req.body.activeStatus || !req.body.stock || !req.body.description) {
         res.send({
             message: "Please Fill All Product Info",
             status: 301
@@ -196,7 +202,7 @@ app.post('/admindashboard', (req, res, next) => {
                 adminModel.create({
                     "productname": req.body.productname,
                     "price": req.body.price,
-                    "productimage": req.body.productimage,
+                    "productimages": req.body.productimages,
                     "activeStatus": req.body.activeStatus,
                     "stock": req.body.stock,
                     "description": req.body.description
