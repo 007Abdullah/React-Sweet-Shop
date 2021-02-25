@@ -176,7 +176,11 @@ app.post("/upload", upload.any(), (req, res, next) => {  // never use upload.sin
                         // res.send(urlData[0]);
                         console.log("===================>", urlData[0]);
 
-                        res.send("Ok");
+                        res.send({
+                            message: "Upload Successfully",
+                            status: 200,
+                            url: urlData[0]
+                        });
                         // // delete file from folder before sending response back to client (optional but recommended)
                         // // optional because it is gonna delete automatically sooner or later
                         // // recommended because you may run out of space if you dont do so, and if your files are sensitive it is simply not safe in server folder

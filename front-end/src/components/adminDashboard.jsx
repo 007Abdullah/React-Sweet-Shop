@@ -20,6 +20,10 @@ function AdminDashboard() {
     const [data, setData] = useState([]);
     const [images, setImages] = useState([fallback, fallback, fallback]);
     const globalState = useGlobalState();
+    const [imgurl, setURL] = useState([]);
+
+
+
     // const setGlobalState = useGlobalStateUpdate();
     const productname = useRef();
     const price = useRef();
@@ -41,7 +45,7 @@ function AdminDashboard() {
             data: {
                 productname: productname.current.value,
                 price: price.current.value,
-                productimages: images,
+                productimages: imgurl,
                 activeStatus: activeStatus.current.value,
                 stock: stock.current.value,
                 description: description.current.value,
@@ -105,7 +109,10 @@ function AdminDashboard() {
             withCredentials: true
         }).then(res => {
             console.log(`  upload Success`);
-            alert("upload Success")
+            alert(res.data.message)
+            setURL(prev => {
+                return prev.concat(res.data.url)
+            })
             // document.getElementById("show_pic").innerHTML = instanceOfFileReader.readAsDataURL(res.data);
 
             reader.addEventListener("load", function () {
@@ -124,19 +131,6 @@ function AdminDashboard() {
             console.log(err);
         })
     }
-    // function previewFile(e, index) {
-    //     console.log("fffffffffffffff: ", e.target);
-    //     const file = e.target.files[0];
-    //     const reader = new FileReader();
-
-    //     reader.addEventListener("load", function () {
-    //         // convert image file to base64 string
-    //     }, false);
-
-    //     if (file) {
-    //         reader.readAsDataURL(file);
-    //     }
-    // }
 
     console.log("Which data === >", images);
 
@@ -144,6 +138,7 @@ function AdminDashboard() {
         event.preventDefault();
     }
 
+    console.log("======> Kia a raha han isma", imgurl);
 
     return (
 
