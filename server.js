@@ -102,7 +102,7 @@ app.get("/profile", (req, res, next) => {
 })
 
 app.post('/admindashboard', (req, res, next) => {
-    if (!req.body.productname || !req.body.price || !req.body.productimage || !req.body.activeStatus || !req.body.stock || req.body.description) {
+    if (!req.body.productname || !req.body.price || !req.body.productimage || !req.body.activeStatus || !req.body.stock || !req.body.description) {
         res.send({
             message: "Please Fill All Product Info",
             status: 301
@@ -117,15 +117,38 @@ app.post('/admindashboard', (req, res, next) => {
                     "productimage": req.body.productimage,
                     "activeStatus": req.body.activeStatus,
                     "stock": req.body.stock,
-                    "description": req.body.description,
-
-
+                    "description": req.body.description
+                }, function (err, data) {
+                    if (err) {
+                        res.send({
+                            message: " DB ERROR",
+                            status: 404
+                        });
+                    }
+                    else if (data) {
+                        res.send({
+                            status: 200,
+                            message: "Added",
+                            data: data
+                        });
+                    } else {
+                        res.send({
+                            message: "err",
+                            status: 500
+                        });
+                    }
+                })
+            } else {
+                res.send({
+                    message: "Only Edit  Admin",
+                    status: 404
                 })
             }
         }
         else {
             res.send({
-                message: "error"
+                message: "Only Edit  Admin",
+                status: 404
             });
         }
     })
