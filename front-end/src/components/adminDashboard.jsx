@@ -4,12 +4,12 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 
 import { useGlobalState } from "./../context/globalContext";
 
-// import { Container, Form, Col, Button, Row } from 'react-bootstrap'
+import { Container, Form, Col, Button, Row } from 'react-bootstrap'
 import './admin.css';
 import fallback from './../images/image_1024.png';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import { Button, Col, Form, Container, Row } from "react-bootstrap";
-import Crousel from './Crousel'
+// import Crousel from './Crousel'
 
 
 
@@ -141,11 +141,11 @@ function AdminDashboard() {
 
     return (
 
-        <div className="logincenter">
+        <div>
             <MDBContainer>
                 <MDBRow>
                     <MDBCol md="6">
-                        <form onSubmit={handlsubmit}>
+                        <form onSubmit={handlsubmit} className='formcenter'>
                             <p className="h4 text-center mb-4">Product Add</p>
                             <label htmlFor="defaultFormLoginEmailEx" className="black-text">
                                 Product Name
@@ -172,16 +172,17 @@ function AdminDashboard() {
                             <label htmlFor="defaultFormLoginPasswordEx" className="black-text">
                                 Product Images
                             </label>
-                            <div className="row justify-content-lg-between d-flex" style={{ border: '1px solid black' }}>
-                                <div className='col-3'>
-                                    {images.map((eachImage, index) => (
+                            <div className="row justify-content align-items-lg-start d-flex">
+                                {images.map((eachImage, index) => (
+                                    <div className='col-4'>
                                         <form onSubmit={check}>
                                             <div className="file-upload" key={index}>
                                                 <img src={eachImage} alt="FallBack" id="show_pic" />;
                                             <input type="file" onChange={(e) => { upload(e, index) }} id="fileInput" required />
                                             </div>
-                                        </form>))}
-                                </div>
+                                        </form>
+                                    </div>))}
+
 
 
                                 {/* <div className="file-upload">
@@ -219,9 +220,18 @@ function AdminDashboard() {
                 </MDBRow>
             </MDBContainer>
 
-            <Crousel />
+            {/* <Crousel /> */}
 
             {'===>' + JSON.stringify(globalState)}
+
+            {/* map and render data  */}
+
+            <div className="row">
+
+            </div>
+
+
+
         </div>
 
 

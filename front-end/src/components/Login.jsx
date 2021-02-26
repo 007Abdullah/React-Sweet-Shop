@@ -32,7 +32,7 @@ function Login() {
             if (response.data.status === 200) {
                 // alert(response.data.message)
                 setGlobalState(prev => {
-                    return { ...prev, user: response.data.user, loginStatus: true, role: response.data.user.role}
+                    return { ...prev, user: response.data.user, loginStatus: true, role: response.data.user.role }
                 })
 
             } else {
@@ -45,11 +45,11 @@ function Login() {
 
     }
     return (
-        <div className="logincenter">
+        <div className="center">
             <MDBContainer>
-                <MDBRow>
+                <MDBRow className="rowcenter">
                     <MDBCol md="6">
-                        <form onSubmit={hanldlogin}>
+                        <form onSubmit={hanldlogin} className="formcenter">
                             <p className="h4 text-center mb-4">Sign in</p>
                             <label htmlFor="defaultFormLoginEmailEx" className="grey-text">
                                 Your email

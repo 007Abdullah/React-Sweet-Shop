@@ -1,7 +1,7 @@
-.f-card {
+/* .f-card {
     background-color: white;
     /*height:400px;*/
-    width: 502px;
+    /* width: 502px;
     border: 1px solid #d0d1d5;
     border-radius: 3px;
     margin: auto;
@@ -9,21 +9,20 @@
     padding: 12px;
     box-shadow: 0 0 5px rgba(0, 0, 0, .30);
     /* Not original, just a test */
-}
+/* } */
 
-.header {
+/* .header {
     margin-bottom: 17px;
-}
+} */
 
-.co-logo {
+/* .co-logo {
     /*display:block;*/
-    float: left;
+    /* float: left;
     margin-right: 8px;
     width: 40px;
-    height: 40px;
-}
-
-.co-name>a {
+    height: 40px; */
+/* } */ 
+/* .co-name>a {
     font-family: Helvetica;
     font-size: 14px;
     font-weight: bold;
@@ -31,48 +30,48 @@
     color: #365899;
     text-decoration: none;
     margin-bottom: 2px;
-}
+} */
 
-.co-name>a:hover {
+/* .co-name>a:hover {
     text-decoration: underline;
-}
+} */ 
 
-.time {
+/* .time {
     font-family: Helvetica;
     font-size: 12px;
     color: #90949c;
-}
+} */
 
-.time>a {
+/* .time>a {
     color: #90949c;
     text-decoration: none;
-}
+} */
 
-.time>a:hover {
+/* .time>a:hover {
     text-decoration: underline;
-}
+} */
 
-.options {
+/* .options {
     font-family: Helvetica;
     font-size: 12px;
     color: #e5e5e5;
     float: right;
-}
+} */
 
-.options:hover {
+/* .options:hover {
     color: black;
     /* Fallback */
-    color: rgba(0, 0, 0, .30);
-}
+    /* color: rgba(0, 0, 0, .30); */
 
-.content {
+
+/* .content {
     clear: both;
     font-family: Helvetica, sans-serif;
     font-size: 14px;
     line-height: 1.38;
-}
+} */
 
-.reference {
+/* .reference {
     width: 476px;
 }
 
@@ -80,9 +79,9 @@
     display: block;
     width: 476px;
     height: 249px;
-}
+} */
 
-.box{
+/* .box{
     width: 25%;
     height: 50%;
     border: 1px solid black;
@@ -90,16 +89,21 @@
 }
 .box div {
     -ms-flex: 1;  /* IE 10 */  
-    flex: 1;
-  }
+    /* flex: 1; */
+  /* }
 .productimg{
     width: 100%;
+} */ 
+.formcenter{
+    width: 100%;
+    padding: 5px;
+    margin-left: 50%;
 }
 
 .file-upload {
     height: 170px;
     width: 170px;
-    margin: 40px auto;
+    /* margin: 40px auto; */
     border: 1px solid #f0c0d0;
     border-radius: 100px;
     overflow: hidden;
