@@ -13,7 +13,7 @@ import {
   Link, Redirect
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminDashboard from "./components/adminDashboard";
 import LogoutButton from './components/logoutButton';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import { useGlobalState } from './context/globalContext'

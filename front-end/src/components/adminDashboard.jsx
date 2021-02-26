@@ -132,7 +132,7 @@ function AdminDashboard() {
     }
 
     console.log("Which data === >", images);
-    console.log("isma be check karwna han han merii jan", data)
+    console.log("is data dekho kia a rhaa han", data)
     function check(event) {
         event.preventDefault();
     }
@@ -218,21 +218,41 @@ function AdminDashboard() {
                         </form>
                     </MDBCol>
                 </MDBRow>
+                {/* map and render data  */}
+                <MDBRow>
+                    <MDBCol>
+
+                        <div className="row justify-align-content-md-center d-flex">
+                            {data.map((e, i) => {
+                                return (
+                                <>
+                                    <div className='col-3'>
+                                        <h1>{e.activeStatus}</h1>
+                                    </div>
+
+                                </>
+                            )
+                            })}
+                        </div>
+
+
+                    </MDBCol>
+
+                </MDBRow>
+
             </MDBContainer>
 
-            {/* <Crousel /> */}
+            {/* <Crousel /> */ }
 
-            {'===>' + JSON.stringify(globalState)}
-
-            {/* map and render data  */}
-
-            <div className="row">
-
-            </div>
+    { '===>' + JSON.stringify(globalState) }
 
 
 
-        </div>
+
+
+
+
+        </div >
 
 
     )

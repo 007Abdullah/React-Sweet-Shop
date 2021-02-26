@@ -103,7 +103,7 @@
 .file-upload {
     height: 170px;
     width: 170px;
-    /* margin: 40px auto; */
+    margin: 40px auto;
     border: 1px solid #f0c0d0;
     border-radius: 100px;
     overflow: hidden;
@@ -127,3 +127,12 @@
     width: 170px;
 
 }
+
+/* .product-show{
+    padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+  /* flex-direction: column */
