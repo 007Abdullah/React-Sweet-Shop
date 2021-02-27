@@ -279,6 +279,23 @@ app.post('/admindashboard', (req, res, next) => {
     })
 })
 
+app.get('/getProducts', (req, res, next) => {
+    adminModel.find({}, (err, data) => {
+        if (!err) {
+            res.send({
+                products: data,
+                status: 200
+            })
+        }
+        else {
+            res.send({
+                message: err,
+                status: 404
+            })
+        }
+    })
+})
+
 server.listen(PORT, () => {
     console.log("Server is Running:", PORT);
 });

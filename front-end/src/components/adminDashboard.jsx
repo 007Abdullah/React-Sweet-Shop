@@ -11,9 +11,6 @@ import fallback from './../images/image_1024.png';
 // import { Button, Col, Form, Container, Row } from "react-bootstrap";
 // import Crousel from './Crousel'
 
-
-
-
 let url = 'http://localhost:5000'
 
 function AdminDashboard() {
@@ -24,12 +21,14 @@ function AdminDashboard() {
 
 
 
+
     // const setGlobalState = useGlobalStateUpdate();
     const productname = useRef();
     const price = useRef();
     const activeStatus = useRef();
     const stock = useRef();
     const description = useRef();
+    const imgref = useRef();
 
 
 
@@ -57,6 +56,13 @@ function AdminDashboard() {
                 setData((previous) => {
                     return previous.concat([response.data.data]);
                 });
+                productname.current.value = ""
+                price.current.value = ""
+                activeStatus.current.value = ''
+                stock.current.value = ""
+                description.current.value = ""
+
+
                 // console.log("ya data check karna han kaha sa a rha han", response.data.data)
             } else {
                 alert(response.data.message);
@@ -132,7 +138,7 @@ function AdminDashboard() {
     }
 
     console.log("Which data === >", images);
-    console.log("is data dekho kia a rhaa han", data)
+    console.log("is data dekho kia a rhaa han", ...data)
     function check(event) {
         event.preventDefault();
     }
@@ -150,16 +156,16 @@ function AdminDashboard() {
                             <label htmlFor="defaultFormLoginEmailEx" className="black-text">
                                 Product Name
                             </label>
-                            <input type="text" ref={productname} className="form-control" placeholder="Product Name" />
+                            <input type="text" ref={productname} className="form-control" placeholder="Product Name" required />
 
                             <label htmlFor="defaultFormLoginPasswordEx" className="black-text">
                                 Product Price
                             </label>
-                            <input type="number" className="form-control" ref={price} placeholder="Product Price" />
+                            <input type="number" className="form-control" ref={price} placeholder="Product Price" required />
                             <label htmlFor="defaultFormLoginPasswordEx" className="black-text">
                                 Product Stock
                             </label>
-                            <input type="text" className="form-control" ref={stock} placeholder="Product Stock" />
+                            <input type="text" className="form-control" ref={stock} placeholder="Product Stock" required />
                             <br />
                             <label htmlFor="defaultFormLoginPasswordEx" className="black-text">
                                 ActiveStatus
@@ -172,12 +178,12 @@ function AdminDashboard() {
                             <label htmlFor="defaultFormLoginPasswordEx" className="black-text">
                                 Product Images
                             </label>
-                            <div className="row justify-content align-items-lg-start d-flex">
+                            <div className="row justify-content align-items-lg-start d-flex" required>
                                 {images.map((eachImage, index) => (
                                     <div className='col-4'>
-                                        <form onSubmit={check}>
+                                        <form onSubmit={check} required>
                                             <div className="file-upload" key={index}>
-                                                <img src={eachImage} alt="FallBack" id="show_pic" />;
+                                                <img src={eachImage} alt="FallBack" id="show_pic" required ref={imgref} />;
                                             <input type="file" onChange={(e) => { upload(e, index) }} id="fileInput" required />
                                             </div>
                                         </form>
@@ -210,7 +216,7 @@ function AdminDashboard() {
                             <label htmlFor="defaultFormLoginPasswordEx" className="black-text">
                                 Product Description
                             </label>
-                            <input type="text" className="form-control" ref={description} placeholder="Product Description" />
+                            <input type="text" required className="form-control" ref={description} placeholder="Product Description" />
 
                             <div className="text-center mt-4">
                                 <MDBBtn color="indigo" type="submit">Add</MDBBtn>
@@ -223,15 +229,38 @@ function AdminDashboard() {
                     <MDBCol>
 
                         <div className="row justify-align-content-md-center d-flex">
+
                             {data.map((e, i) => {
                                 return (
-                                <>
-                                    <div className='col-3'>
-                                        <h1>{e.activeStatus}</h1>
-                                    </div>
+                                    <>
+                                        <div class="card mb-3" style={{ maxWidth: '540px' }}>
+                                            <div class="row g-0">
+                                                <div class="col-md-4">
+                                                    <img
+                                                        src={e.productimages[0]}
+                                                        alt="..."
+                                                        class="img-fluid"
+                                                    />
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">Product Name : {e.productname}</h5>
+                                                        <h6 class="card-title">Product Price : {e.price + "$"}</h6>
+                                                        <h6 class="card-title">Stock : {e.stock}</h6>
 
-                                </>
-                            )
+                                                        <p class="card-text">
+                                                            {e.description}
+                                                        </p>
+                                                        <p class="card-text">
+                                                            <small class="text-muted">Active Status :{e.activeStatus}</small>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </>
+                                )
                             })}
                         </div>
 
@@ -242,9 +271,9 @@ function AdminDashboard() {
 
             </MDBContainer>
 
-            {/* <Crousel /> */ }
+            {/* <Crousel /> */}
 
-    { '===>' + JSON.stringify(globalState) }
+            { '===>' + JSON.stringify(globalState)}
 
 
 
