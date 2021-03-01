@@ -20,47 +20,40 @@ export default function Basket(props) {
 
     return (
         <MDBRow>
-            <div class="row" style={{ border: '1px solid black' }}>
+            <div class="row">
                 <div class="col-lg-8">
                     <div class="mb-3">
                         <div class="pt-4 wish-list">
 
                             <h5 class="mb-4">Cart (<span>{cartItem.length}</span> items)</h5>
+                            <div class="row mb-4">
+                                <div class="col-md-5 col-lg-3 col-xl-3">
+                                    <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                                        {/* <img class="img-fluid w-100"
+                                            src="" alt="Sample" />
+                                        <a href="">
+                                            <div class="mask">
+                                                <img class="img-fluid w-100"
+                                                    src="" alt="Sample" />
+                                                <div class="mask rgba-black-slight"></div>
+                                            </div>
+                                        </a> */}
+
+                                    </div>
+                                </div>
+                            </div>
                             {cartItem.map((e, index) => {
                                 return (
 
                                     <>
 
                                         <div class="row mb-4">
-                                            <div class="col-md-5 col-lg-3 col-xl-3">
-                                                <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
-                                                    {/* {e.productimages.map((v, i) => {
-
-                                                        return (
-                                                            <>
-                                                                {console.log('product images=>', v)}
-                                                                <img class="img-fluid w-100"
-                                                                    src={v[i]} alt="Sample" />
-                                                                <a href="#!">
-                                                                    <div class="mask">
-                                                                        <img class="img-fluid w-100"
-                                                                            src={v[i]} alt="Sample" />
-                                                                        <div class="mask rgba-black-slight"></div>
-                                                                    </div>
-                                                                </a>
-
-                                                            </>
-                                                        )
-                                                    })} */}
-
-                                                </div>
-                                            </div>
                                             <div class="col-md-7 col-lg-9 col-xl-9">
                                                 <div>
                                                     <div class="d-flex justify-content-between">
                                                         <div>
                                                             <h5>{e.productname}</h5>
-                                                            <p class="mb-3 text-muted text-uppercase small">Stock - {e.stock}</p>
+                                                            <p class="mb-3 text-muted text-uppercase small">Stock : {e.stock}</p>
                                                             <p class="mb-2 text-muted text-uppercase small"></p>
                                                             <p class="mb-3 text-muted text-uppercase small"></p>
                                                         </div>
@@ -78,8 +71,8 @@ export default function Basket(props) {
                                                     </div>
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <div>
-                                                            <a href="#!" type="button" class="card-link-secondary small text-uppercase mr-3"><i
-                                                                class="fas fa-trash-alt mr-1"></i><span onClick={() => removeItem(e, index)}>Remove item</span> </a>
+                                                            <a href type="button" class="card-link-secondary small text-uppercase mr-3"><i
+                                                                class="fas fa-trash-alt mr-1"></i><span onClick={(e) => removeItem(index)}>Remove item</span> </a>
                                                         </div>
                                                         <p class="mb-0"><span><strong id="summary">{e.price}</strong></span></p>
                                                     </div>

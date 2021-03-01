@@ -77,13 +77,11 @@ function Dashboard() {
 
     }
 
-    function removeItem(e, index) {
-        const remove = cartItem.splice(index)
-        setCartItem(
-            cartItem.map((x) =>
-                x._id === e._id ? { ...remove, stock: remove.stock - 1 } : x
-            )
-        )
+    function removeItem(index) {
+        let getindex = [...cartItem]
+        getindex.splice(index, 1)
+        setCartItem(getindex)
+
     }
 
     function changeState() {
@@ -96,7 +94,7 @@ function Dashboard() {
         <>
 
             <a className="btn btn-outline-success" onClick={changeState}
-                style={{ float: 'right' }}><i class="fas fa-cart-plus mr-3" /><span>{cartItem.length}</span><span className="sr-only">(current)</span></a>
+                style={{ float: 'right' }} href><i class="fas fa-cart-plus mr-3" /><span>{cartItem.length}</span><span className="sr-only">(current)</span></a>
             <MDBRow>
 
                 {show === true ? <main className="container">
