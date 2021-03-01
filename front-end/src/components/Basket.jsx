@@ -71,7 +71,7 @@ export default function Basket(props) {
                                                     </div>
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <div>
-                                                            <a href type="button" class="card-link-secondary small text-uppercase mr-3"><i
+                                                            <a href="kaksdjfkasljfla" type="button" class="card-link-secondary small text-uppercase mr-3"><i
                                                                 class="fas fa-trash-alt mr-1"></i><span onClick={(e) => removeItem(index)}>Remove item</span> </a>
                                                         </div>
                                                         <p class="mb-0"><span><strong id="summary">{e.price}</strong></span></p>
