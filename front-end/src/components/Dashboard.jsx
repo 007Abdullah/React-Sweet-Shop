@@ -8,6 +8,7 @@ import {
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import Basket from './Basket';
 import { Prev } from 'react-bootstrap/esm/PageItem';
+import { set } from 'mongoose';
 
 
 function Dashboard() {
@@ -38,9 +39,8 @@ function Dashboard() {
 
     function aDD(e, index) {
         console.log('index', index);
-        console.log("cart is ",cartItem);
-;        const exist = cartItem.find((x) => x._id === e._id)
-
+        console.log("cart is ", cartItem);
+        const exist = cartItem.find((x) => x._id === e._id)
         if (exist) {
             setCartItem(
                 cartItem.map((x) =>
@@ -62,7 +62,7 @@ function Dashboard() {
 
     }
 
-    function remove(e,index) {
+    function remove(e, index) {
         const exist = cartItem.find((x) => x._id === e._id);
         if (exist.stock === 1) {
             setCartItem(cartItem.filter((x) => x._id !== e._id));
@@ -75,6 +75,15 @@ function Dashboard() {
             )
         }
 
+    }
+
+    function removeItem(e, index) {
+        const remove = cartItem.splice(index)
+        setCartItem(
+            cartItem.map((x) =>
+                x._id === e._id ? { ...remove, stock: remove.stock - 1 } : x
+            )
+        )
     }
 
     function changeState() {
@@ -109,17 +118,8 @@ function Dashboard() {
                     </div>
                 </main> :
 
-                    <Basket cartItem={cartItem} aDD={aDD} remove={remove} />}
+                    <Basket cartItem={cartItem} aDD={aDD} remove={remove} removeItem={removeItem} />}
             </MDBRow>
-
-            {/* <MDBRow>
-                <Basket />
-            </MDBRow> */}
-
-
-
-
-
         </>
     )
 }

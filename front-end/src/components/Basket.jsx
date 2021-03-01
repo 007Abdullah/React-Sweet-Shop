@@ -5,7 +5,7 @@ import { MDBRow } from 'mdbreact';
 export default function Basket(props) {
 
     const globalStateUpdate = useGlobalStateUpdate();
-    const { cartItem, aDD, remove } = props;
+    const { cartItem, aDD, remove, removeItem } = props;
     const itemPrice = cartItem.reduce((accumulator, current) => accumulator + current.stock * current.price, 0)
     const totalPrice = itemPrice;
     const history = useHistory();
@@ -79,7 +79,7 @@ export default function Basket(props) {
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <div>
                                                             <a href="#!" type="button" class="card-link-secondary small text-uppercase mr-3"><i
-                                                                class="fas fa-trash-alt mr-1"></i> Remove item </a>
+                                                                class="fas fa-trash-alt mr-1"></i><span onClick={() => removeItem(e, index)}>Remove item</span> </a>
                                                         </div>
                                                         <p class="mb-0"><span><strong id="summary">{e.price}</strong></span></p>
                                                     </div>
@@ -107,11 +107,11 @@ export default function Basket(props) {
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                     Temporary amount
-              <span>$25.98</span>
+                                <span>$25.98</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                     Shipping
-              <span>Gratis</span>
+                                <span>Gratis</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                     <div>
@@ -124,7 +124,7 @@ export default function Basket(props) {
                                 </li>
                             </ul>
 
-                            <button type="button" class="btn btn-primary btn-block">go to checkout</button>
+                            <button type="button" class="btn btn-primary btn-block" onClick={checkout}>GO TO Checkout</button>
 
                         </div>
                     </div>
