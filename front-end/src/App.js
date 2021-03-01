@@ -13,10 +13,14 @@ import {
   Link, Redirect
 } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
-import AdminDashboard from "./components/adminDashboard";
-import LogoutButton from './components/logoutButton';
+import AdminDashboard from "./components/AdminDashboard";
+import LogoutButton from './components/LogoutButton';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import { useGlobalState } from './context/globalContext'
+import AddProduct from './components/AddProduct';
+import Checkout from './components/Checkout';
+import Basket from './components/Basket';
+import Myorders from './components/Myorders';
 function App() {
   const globalState = useGlobalState();
 
@@ -27,16 +31,106 @@ function App() {
           <Navbar bg="dark" variant="dark">
             {(globalState.loginStatus === true) ?
               <>
+                {(globalState.role === 'admin') ?
+                  <>
+                    <Nav className="mr-auto">
+                      <Nav.Link><Link to="/">Admin Dashboard</Link></Nav.Link>
+
+                      <Nav.Link><Link to="/addproducts">Add Product</Link></Nav.Link>
+                    </Nav>
+                    <LogoutButton />
+
+
+                  </> :
+                  <>
+                    <Nav className="mr-auto">
+                      <Nav.Link><Link to="/">User Dashboard</Link></Nav.Link>
+
+                      <Nav.Link><Link to="/basket">ghfdghfh</Link></Nav.Link>
+                    </Nav>
+
+                    <LogoutButton />
+
+
+
+
+                  </>}
+
+              </> :
+              <>
+
                 <Nav className="mr-auto">
-                  <Nav.Link href="/"><Link to="/">Dashboard</Link></Nav.Link>
-                  <Nav.Link href="/"><Link to="/profile">profile</Link></Nav.Link>
-                  {/* <Nav.Link href="/"><Link to="/"><LogoutButton /></Link></Nav.Link> */}
+                  <Nav.Link href="/"><Link to="/">Home</Link></Nav.Link>
+                  <Nav.Link href="/login"><Link to="/login">Login</Link></Nav.Link>
+                  <Nav.Link href="/signup"><Link to="/signup">Signup</Link></Nav.Link>
+                </Nav>
+
+
+              </>
+
+            }
+
+
+
+
+
+
+            {/* {(globalState.role === 'user') ?
+              <>
+                <Nav className="mr-auto">
+                  <Nav.Link href="/"><Link to="/">User Dashboard</Link></Nav.Link>
+
+                  <Nav.Link href="/"><Link to="/addproducts">My Orders</Link></Nav.Link>
+                 
                 </Nav>
                 <Form inline>
                   <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                   <Button variant="outline-info">Search</Button>
                   <LogoutButton />
-                </Form>
+                </Form> */}
+
+
+            {/* </> :
+              <>
+                <Nav className="mr-auto">
+                  <Nav.Link href="/"><Link to="/">Admin Dashboard</Link></Nav.Link>
+
+                  <Nav.Link href="/"><Link to="/">Add Product</Link></Nav.Link>
+                  {/* <Nav.Link href="/"><Link to="/"><LogoutButton /></Link></Nav.Link> */}
+            {/* </Nav>
+                <Form inline>
+                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                  <Button variant="outline-info">Search</Button>
+                  <LogoutButton />
+                </Form> */}
+
+
+
+
+            {/* </>} */}
+
+
+
+
+
+
+
+
+            {/* {(globalState.loginStatus === true) ?
+              <> */}
+            {/* <Nav className="mr-auto">
+                  <Nav.Link href="/"><Link to="/">Dashboard</Link></Nav.Link>
+
+                  <Nav.Link href="/"><Link to="/profile">profile</Link></Nav.Link>
+
+                </Nav>
+                <Form inline>
+                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+                  <Button variant="outline-info">Search</Button>
+                  <LogoutButton />
+                </Form> */}
+            {/* <a className="text-success btn btn-outline-success mr-3">Logout<span className="sr-only">(current)</span></a>
+                <a className="btn btn-outline-success " ><i class="fas fa-cart-plus mr-3" /><span>{ }</span><span className="sr-only">(current)</span></a>
               </>
               :
               <>
@@ -46,7 +140,7 @@ function App() {
                   <Nav.Link href="/signup"><Link to="/signup">Signup</Link></Nav.Link>
                 </Nav>
               </>
-            }
+            } */}
 
 
           </Navbar>
@@ -83,6 +177,19 @@ function App() {
                 <Home />
               </Route>
 
+              <Route path="/basket">
+                <Basket />
+              </Route>
+
+              <Route path="/checkout">
+                <Checkout />
+              </Route>
+
+              <Route path="/myorders">
+                <Myorders />
+              </Route>
+
+
 
               <Route path="*">
                 <Redirect to="/" />
@@ -96,8 +203,12 @@ function App() {
               <Route exact path="/">
                 <AdminDashboard />
               </Route>
-              <Route path="/home">
+              <Route path="/logout">
                 <LogoutButton />
+              </Route>
+
+              <Route path="/addproducts">
+                <AddProduct />
               </Route>
 
               <Route path="*">

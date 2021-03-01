@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useGlobalStateUpdate } from "./../context/globalContext";
+import { useGlobalStateUpdate } from "../context/globalContext";
 import { Button } from "react-bootstrap";
 function LogoutButton() {
 

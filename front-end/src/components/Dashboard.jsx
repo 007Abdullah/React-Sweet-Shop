@@ -4,8 +4,11 @@ import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext
 import {
     useHistory
 } from "react-router-dom";
-import LogoutButton from "./logoutButton";
+// import LogoutButton from "./logoutButton";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import Basket from './Basket';
+import { Prev } from 'react-bootstrap/esm/PageItem';
+
 
 function Dashboard() {
 
@@ -13,6 +16,11 @@ function Dashboard() {
     const globalState = useGlobalState();
     const setGlobalState = useGlobalStateUpdate();
     const [produt, setProducts] = useState([]);
+    const [cartItem, setCartItem] = useState([]);
+
+    const [show, ShowHide] = useState(true);
+
+
     let history = useHistory()
     useEffect(() => {
         axios({
@@ -27,32 +35,65 @@ function Dashboard() {
         })
     }, [])
     console.log(produt)
+
+    function aDD(e, index) {
+        console.log('index', index);
+        console.log("cart is ",cartItem);
+;        const exist = cartItem.find((x) => x._id === e._id)
+
+        if (exist) {
+            setCartItem(
+                cartItem.map((x) =>
+                    x._id === e._id ? { ...exist, stock: exist.stock + 1 } : x
+                )
+            )
+            // var prevProducts = [...cartItem];
+            // prevProducts[index].stock =  prevProducts[index].stock + 1;
+            // setCartItem(prevProducts);
+
+
+        } else {
+            setCartItem([...cartItem, { ...e, stock: 1 }])
+
+        }
+
+
+
+
+    }
+
+    function remove(e,index) {
+        const exist = cartItem.find((x) => x._id === e._id);
+        if (exist.stock === 1) {
+            setCartItem(cartItem.filter((x) => x._id !== e._id));
+        }
+        else {
+            setCartItem(
+                cartItem.map((x) =>
+                    x._id === e._id ? { ...exist, stock: exist.stock - 1 } : x
+                )
+            )
+        }
+
+    }
+
+    function changeState() {
+        ShowHide(Prev => !Prev)
+    }
+
+
+
     return (
         <>
-            {/* <LogoutButton />            */}
-            {/* <h1>Dashboard</h1>
-            <div>
 
-                {globalState.user ?
-                    <>
-                        <div>
-                            <h2>{globalState.user.name}</h2>
-                        </div>
-
-                    </>
-                    : null}
-            </div>
- */}
-
-            {/* {'===>' + JSON.stringify(globalState)} */}
-
-
-
+            <a className="btn btn-outline-success" onClick={changeState}
+                style={{ float: 'right' }}><i class="fas fa-cart-plus mr-3" /><span>{cartItem.length}</span><span className="sr-only">(current)</span></a>
             <MDBRow>
-                <main className="container">
+
+                {show === true ? <main className="container">
                     <h1 className="text-center mt-1 ">Products</h1>
                     <div className="row">
-                        {produt.map((e) => (
+                        {produt.map((e, index) => (
                             <div className="col-md-3 mt-3" key={e.id}>
                                 <div>
                                     <img className="w-100" height="200" src={e.productimages[0]} alt={e.productname} />
@@ -60,33 +101,21 @@ function Dashboard() {
                                     <p class="card-text">{e.description}</p>
                                     <div>PKR: {e.price}/- Per kg</div>
                                     <div>
-                                        <button className="btn btn-primary">Add To Cart</button>
+                                        <button className="btn btn-primary" onClick={() => aDD(e, index)}>Add To Cart</button>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
-                </main>
+                </main> :
 
-                {/* {produt.map((e) => {
-                    return (
-                        <>
-                            <div>
-
-                                <h1>adfasjkfhajfhd</h1>
-                            </div>
-
-                        </>
-
-
-                    )
-                })
-                } */}
-                <br />
-
-
-
+                    <Basket cartItem={cartItem} aDD={aDD} remove={remove} />}
             </MDBRow>
+
+            {/* <MDBRow>
+                <Basket />
+            </MDBRow> */}
+
 
 
 
