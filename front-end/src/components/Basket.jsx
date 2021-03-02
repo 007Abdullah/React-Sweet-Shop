@@ -15,7 +15,7 @@ export default function Basket(props) {
             ...prev,
             cartData: { cartItem: cartItem, totalPrice: totalPrice }
         }))
-        history.push('/checkout')
+        history.push('/Checkoutform')
     }
 
     return (

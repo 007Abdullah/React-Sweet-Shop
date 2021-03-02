@@ -51,9 +51,28 @@ var adminSchema = new mongoose.Schema({
 
 var adminModel = mongoose.model("admin", adminSchema);
 
+var checkoutformSchema = new mongoose.Schema({
+    "name": String,
+    "email": String,
+    "phonenumber": String,
+    "address": String,
+    "status": String,
+    "orders": Array,
+    "totalPrice": String,
+    "createdOn": { "type": Date, 'Default': Date.now }
+})
+
+var checkoutformModel = mongoose.model('checkoutform', checkoutformSchema);
+
+
+
+
+
+
 module.exports = {
     userModel: userModel,
-    adminModel: adminModel
+    adminModel: adminModel,
+    checkoutformModel: checkoutformModel
     // orderModel: orderModel
     // others
 }

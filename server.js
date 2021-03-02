@@ -10,7 +10,7 @@ var path = require('path')
 const multer = require('multer');
 const fs = require('fs');
 const admin = require("firebase-admin");
-var { userModel, adminModel } = require("./dbrepo/models");
+var { userModel, adminModel, checkoutformModel } = require("./dbrepo/models");
 
 var { SERVER_SECRET } = require("./core/index");
 
@@ -295,6 +295,44 @@ app.get('/getProducts', (req, res, next) => {
         }
     })
 })
+app.post('/checkoutForm', (req, res, next) => {
+    if (!req.body.name || !req.body.phonenumber || !req.body.address || !req.body.orders || !req.body.totalPrice) {
+        res.send({
+            message: "Please Provide All Info",
+            status: 300
+        });
+    }
+    userModel.findOne({ email: req.body.jToken.email }, (err, user) => {
+        console.log("this email find", req.body.jToken.email);
+        if (!err) {
+            checkoutformModel.create({
+                "name": req.body.name,
+                "email": user.email,
+                "phonenumber": req.body.phonenumber,
+                "status": "IS Review",
+                "address": req.body.address,
+                "orders": req.body.orders,
+                "totalPrice": req.body.totalPrice
+            }).then((data) => {
+                res.send({
+                    status: 200,
+                    message: "Order Done",
+                    data: data
+                })
+            }).catch((err) => {
+                res.send({
+                    status: 500,
+                    message: "Order Err" + err
+                })
+            })
+        }
+    })
+})
+
+
+
+
+
 
 server.listen(PORT, () => {
     console.log("Server is Running:", PORT);
