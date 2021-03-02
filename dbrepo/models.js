@@ -61,7 +61,6 @@ var checkoutformSchema = new mongoose.Schema({
     "totalPrice": String,
     "createdOn": { "type": Date, 'Default': Date.now }
 })
-
 var checkoutformModel = mongoose.model('checkoutform', checkoutformSchema);
 
 

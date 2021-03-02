@@ -328,7 +328,7 @@ app.post('/checkoutForm', (req, res, next) => {
         }
     })
 })
-
+app.get('/getorders')
 
 
 
