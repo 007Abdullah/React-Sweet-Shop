@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { useGlobalStateUpdate } from "../context/globalContext";
 import { Button } from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
+
+
 function LogoutButton() {
+    const history = useHistory();
 
     let url = 'http://localhost:5000'
     const setGlobalState = useGlobalStateUpdate();
@@ -14,7 +18,10 @@ function LogoutButton() {
         }).then((response) => {
             if (response.data.status === 200) {
                 alert(response.data.message)
-                setGlobalState((prev) => ({ ...prev, loginStatus: false, role: null, user: null }))
+                // Router.History.back();
+                // history.goBack()
+
+                setGlobalState((prev) => ({ ...prev, loginStatus: false, role: "loggedout", user: null }))
             }
         }, (error) => {
             console.log(error.message);

@@ -1,10 +1,17 @@
 import React, { useRef } from 'react'
 import { MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from 'axios';
-
+import { useGlobalState } from './../context/globalContext';
 
 const url = 'http://localhost:5000';
 function Checkout() {
+    const globalState = useGlobalState();
+    globalState.cartData && globalState.cartData.cartItem.map(value => {
+        return (
+            delete value.description,
+            delete value.stock
+        )
+    })
 
     const uname = useRef();
     const number = useRef();
@@ -21,10 +28,12 @@ function Checkout() {
                 name: uname.current.value,
                 phonenumber: number.current.value,
                 address: address.current.value,
+                orders: globalState.cartData.cartItem,
+                totalPrice: globalState.cartData.totalPrice
             }, withCredentials: true
         }).then((response) => {
             if (response.data.status === 200) {
-
+                alert(response.data.message);
             } else {
                 alert(response.data.message);
             }
@@ -33,12 +42,6 @@ function Checkout() {
         });
 
     }
-
-
-
-
-
-
     return (
         <MDBRow>
             <MDBCol md="6">

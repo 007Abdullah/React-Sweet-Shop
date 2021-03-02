@@ -7,8 +7,7 @@ import {
 // import LogoutButton from "./logoutButton";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import Basket from './Basket';
-import { Prev } from 'react-bootstrap/esm/PageItem';
-import { set } from 'mongoose';
+
 
 
 function Dashboard() {
@@ -81,7 +80,6 @@ function Dashboard() {
         let getindex = [...cartItem]
         getindex.splice(index, 1)
         setCartItem(getindex)
-
     }
 
     function changeState() {

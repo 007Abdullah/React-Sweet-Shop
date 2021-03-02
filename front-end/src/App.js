@@ -18,7 +18,7 @@ import LogoutButton from './components/LogoutButton';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import { useGlobalState } from './context/globalContext'
 import AddProduct from './components/AddProduct';
-import Checkout from './components/Checkout';
+import Checkout from './components/Checkoutform';
 import Basket from './components/Basket';
 import Myorders from './components/Myorders';
 function App() {
@@ -26,207 +26,125 @@ function App() {
 
   return (
     <>
-      <Router>
-        <nav>
-          <Navbar bg="dark" variant="dark">
-            {(globalState.loginStatus === true) ?
-              <>
-                {(globalState.role === 'admin') ?
-                  <>
-                    <Nav className="mr-auto">
-                      <Nav.Link><Link to="/">Admin Dashboard</Link></Nav.Link>
+      <nav>
+        <Navbar bg="dark" variant="dark">
+          {(globalState.role === 'admin') ?
+            <>
+              <Nav className="mr-auto">
+                <Nav.Link><Link to="/">Admin Dashboard</Link></Nav.Link>
 
-                      <Nav.Link><Link to="/addproducts">Add Product</Link></Nav.Link>
-                    </Nav>
-                    <LogoutButton />
+                <Nav.Link><Link to="/addproducts">Add Product</Link></Nav.Link>
+              </Nav>
+              <LogoutButton />
+            </> : null
+          }
 
+          {(globalState.role === 'user') ?
+            <>
+              <Nav className="mr-auto">
+                <Nav.Link><Link to="/">user Dashboard</Link></Nav.Link>
 
-                  </> :
-                  <>
-                    <Nav className="mr-auto">
-                      <Nav.Link><Link to="/">User Dashboard</Link></Nav.Link>
+                <Nav.Link><Link to="/myorders">MY Order</Link></Nav.Link>
+              </Nav>
+              <LogoutButton />
+            </> : null
+          }
+          {(globalState.role === 'loggedout') ?
+            <>
+              <Nav className="mr-auto">
+                <Nav.Link><Link to="/signup">Signup</Link></Nav.Link>
+                <Nav.Link><Link to="/">Home</Link></Nav.Link>
+                <Nav.Link><Link to="/login">Login</Link></Nav.Link>
+              </Nav>
+            </> : null
+          }
+        </Navbar>
+      </nav>
 
-                      <Nav.Link><Link to="/basket">ghfdghfh</Link></Nav.Link>
-                    </Nav>
+      {/* ROLE NULL////////////////////////////////////// */}
 
-                    <LogoutButton />
-
-
-
-
-                  </>}
-
-              </> :
-              <>
-
-                <Nav className="mr-auto">
-                  <Nav.Link href="/"><Link to="/">Home</Link></Nav.Link>
-                  <Nav.Link href="/login"><Link to="/login">Login</Link></Nav.Link>
-                  <Nav.Link href="/signup"><Link to="/signup">Signup</Link></Nav.Link>
-                </Nav>
-
-
-              </>
-
-            }
-
-
-
-
-
-
-            {/* {(globalState.role === 'user') ?
-              <>
-                <Nav className="mr-auto">
-                  <Nav.Link href="/"><Link to="/">User Dashboard</Link></Nav.Link>
-
-                  <Nav.Link href="/"><Link to="/addproducts">My Orders</Link></Nav.Link>
-                 
-                </Nav>
-                <Form inline>
-                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                  <Button variant="outline-info">Search</Button>
-                  <LogoutButton />
-                </Form> */}
-
-
-            {/* </> :
-              <>
-                <Nav className="mr-auto">
-                  <Nav.Link href="/"><Link to="/">Admin Dashboard</Link></Nav.Link>
-
-                  <Nav.Link href="/"><Link to="/">Add Product</Link></Nav.Link>
-                  {/* <Nav.Link href="/"><Link to="/"><LogoutButton /></Link></Nav.Link> */}
-            {/* </Nav>
-                <Form inline>
-                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                  <Button variant="outline-info">Search</Button>
-                  <LogoutButton />
-                </Form> */}
-
-
-
-
-            {/* </>} */}
-
-
-
-
-
-
-
-
-            {/* {(globalState.loginStatus === true) ?
-              <> */}
-            {/* <Nav className="mr-auto">
-                  <Nav.Link href="/"><Link to="/">Dashboard</Link></Nav.Link>
-
-                  <Nav.Link href="/"><Link to="/profile">profile</Link></Nav.Link>
-
-                </Nav>
-                <Form inline>
-                  <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                  <Button variant="outline-info">Search</Button>
-                  <LogoutButton />
-                </Form> */}
-            {/* <a className="text-success btn btn-outline-success mr-3">Logout<span className="sr-only">(current)</span></a>
-                <a className="btn btn-outline-success " ><i class="fas fa-cart-plus mr-3" /><span>{ }</span><span className="sr-only">(current)</span></a>
-              </>
-              :
-              <>
-                <Nav className="mr-auto">
-                  <Nav.Link href="/"><Link to="/">Home</Link></Nav.Link>
-                  <Nav.Link href="/login"><Link to="/login">Login</Link></Nav.Link>
-                  <Nav.Link href="/signup"><Link to="/signup">Signup</Link></Nav.Link>
-                </Nav>
-              </>
-            } */}
-
-
-          </Navbar>
-
-        </nav>
-
-
+      {(globalState.role === null) ?
         <Switch>
-          {(globalState.role === null) ?
-            <>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/signup">
-                <Signup />
-              </Route>
+          <Route path="*" ><h1>LOADING......</h1></Route>
+        </Switch>
+        : null
+      }
 
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="*">
-                <Redirect to="/" />
-              </Route>
-            </>
-            : null}
+      {/* ROLE LOGGEDOUT////////////////////////////////////// */}
 
-          {(globalState.role === "user") ?
-            <>
-              <Route exact path="/">
-                <Dashboard />
-              </Route>
+      {(globalState.role === "loggedout") ?
+        <Switch>
+          <Route exact path="/"><Home /></Route>
 
-              <Route path="/home">
-                <Home />
-              </Route>
+          <Route path="/signup"><Signup /></Route>
 
-              <Route path="/basket">
-                <Basket />
-              </Route>
+          <Route path="/login"><Login /></Route>
 
-              <Route path="/checkout">
-                <Checkout />
-              </Route>
-
-              <Route path="/myorders">
-                <Myorders />
-              </Route>
-
-
-
-              <Route path="*">
-                <Redirect to="/" />
-              </Route>
-
-            </>
-            : null}
-
-          {(globalState.role === "admin") ?
-            <>
-              <Route exact path="/">
-                <AdminDashboard />
-              </Route>
-              <Route path="/logout">
-                <LogoutButton />
-              </Route>
-
-              <Route path="/addproducts">
-                <AddProduct />
-              </Route>
-
-              <Route path="*">
-                <Redirect to="/" />
-              </Route>
-            </>
-            : null}
-
-
-
+          <Route path="*" ><Redirect to="/" /></Route>
 
         </Switch>
-      </Router>
+
+        : null
+      }
+
+
+
+      {/* ROLE USER ////////////////////////////////////// */}
+      {(globalState.role === "user") ?
+        <Switch>
+          <Route exact path="/"><Dashboard /></Route>
+
+          <Route path="/basket"><Basket /></Route>
+
+          <Route path="/Checkout"><Checkout /></Route>
+
+          <Route path="/myorders"><Myorders /></Route>
+
+          <Route path="*"><Redirect to="/" /></Route>
+        </Switch>
+        : null
+      }
+
+      {/* ROLE ADMIN ////////////////////////////////////// */}
+      {
+        (globalState.role === "admin") ?
+          <Switch>
+
+            <Route exact path="/"><AdminDashboard /></Route>
+
+            <Route path="/addproducts"><AddProduct /></Route>
+
+            <Route path="*" ><Redirect to="/" /></Route>
+
+            {/* <Route path="*" ><h1>404! Page Not Found</h1></Route> */}
+
+          </Switch>
+          : null
+      }
+
+      {/* ADMIN ROUTES REGISTERED/////////////////////////////////////////// */}
+      {/* {a === "admin" ?
+        <Switch>
+          <Route exact path="/" ><h2>ADMIn found successfully</h2></Route>
+          <Route exact path="/abc" ><h2>ADMIn found abc</h2></Route>
+          <Route path="*" ><h2>ADMIN not found</h2></Route>
+        </Switch>
+        : null
+      } */}
+
+      {/* USER ROUTES REGISTERED/////////////////////////////////////////// */}
+
+      {/* {a === "user" ?
+        <Switch>
+          <Route exact path="/" ><h2>USER found successfully</h2></Route>
+          <Route exact path="/abc" ><h2>USER found abc</h2></Route>
+          <Route path="*" ><h2>USER not found</h2></Route>
+        </Switch>
+        : null
+      } */}
 
     </>
   )
-
-
 }
 
 export default App;

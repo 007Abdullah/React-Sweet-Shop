@@ -5,18 +5,18 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import './login.css'
 import axios from 'axios';
-import {
-    useHistory
-} from "react-router-dom";
 import { useGlobalState, useGlobalStateUpdate } from './../context/globalContext'
+import { useHistory } from 'react-router-dom';
+
 
 
 const url = 'http://localhost:5000'
 function Login() {
-    const history = useHistory();
     let [show, setShow] = useState()
     const globalState = useGlobalState();
     const setGlobalState = useGlobalStateUpdate();
+    const history = useHistory();
+
 
     function hanldlogin(event) {
         event.preventDefault();
@@ -31,8 +31,9 @@ function Login() {
             console.log("response.data: ", response.data);
             if (response.data.status === 200) {
                 // alert(response.data.message)
+                // history.push('/AdminDashboard')
                 setGlobalState(prev => {
-                    return { ...prev, user: response.data.user, loginStatus: true, role: response.data.user.role }
+                    return { ...prev, user: response.data.user, role: response.data.user.role }
                 })
 
             } else {
@@ -61,7 +62,7 @@ function Login() {
                             </label>
                             <input type="password" id="password" className="form-control" placeholder="Enter Your Password" />
                             <div className="text-center mt-4">
-                                <MDBBtn color="indigo" type="submit">Login</MDBBtn>
+                                <MDBBtn color="unique" type="submit">Login</MDBBtn>
                             </div>
                         </form>
                     </MDBCol>

@@ -60,9 +60,6 @@ export default function AddProduct() {
                 activeStatus.current.value = ''
                 stock.current.value = ""
                 description.current.value = ""
-
-
-                // console.log("ya data check karna han kaha sa a rha han", response.data.data)
             } else {
                 alert(response.data.message);
             }
@@ -136,8 +133,7 @@ export default function AddProduct() {
         })
     }
 
-    console.log("Which data === >", images);
-    console.log("is data dekho kia a rhaa han", ...data)
+
     function check(event) {
         event.preventDefault();
     }
@@ -193,7 +189,7 @@ export default function AddProduct() {
                             <input type="text" required className="form-control" ref={description} placeholder="Product Description" />
 
                             <div className="text-center mt-4">
-                                <MDBBtn color="indigo" type="submit">Add</MDBBtn>
+                                <MDBBtn color="unique" type="submit">Add</MDBBtn>
                             </div>
                         </form>
                     </MDBCol>
