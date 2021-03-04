@@ -328,7 +328,26 @@ app.post('/checkoutForm', (req, res, next) => {
         }
     })
 })
-app.get('/getorders')
+
+app.get('/myorder', (req, res, next) => {
+
+    checkoutformModel.findOne({ email: req.body.jToken.email }, (err, user) => {
+        if (!err) {
+            res.send({
+                message: "Order Post",
+                status: 200,
+                data: user
+            });
+        }
+        else {
+            res.send({
+                message: "Error" + err,
+                status: 404
+            });
+        }
+    });
+
+});
 
 
 

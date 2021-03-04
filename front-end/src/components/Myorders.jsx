@@ -1,26 +1,61 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBContainer } from 'mdbreact';
 
+const url = 'http://localhost:5000'
 export default function Myorders() {
-    const url = 'http://localhost:5000'
+
+    const [getdata, setData] = useState([]);
 
     useEffect(() => {
         axios({
             method: 'get',
-            url: 'http://localhost:5000/',
+            url: url + '/myorder',
             withCredentials: true
         }).then((response) => {
-            console.log(response.data.data)
+            // console.log(response.data.data)
+            setData(response.data.data)
         }).catch((err) => {
             console.log(err)
         })
     }, [])
 
-
+    console.log("chal beta ", getdata)
     return (
-        <div>
-            <h1>My Order Show</h1>
+        <MDBContainer>
+            <MDBRow>
+                <h1 style={{ textAlign: 'center' }}>My Orders</h1>
+                < MDBTable striped >
+                    <MDBTableHead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Orders</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </MDBTableHead>
+                    <MDBTableBody>
+                        {getdata.map((e) => (
+                            <tr>
+                                <th></th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        ))}
+                    </MDBTableBody>
+                </MDBTable>
 
-        </div>
+
+            </MDBRow>
+        </MDBContainer>
     )
 }
