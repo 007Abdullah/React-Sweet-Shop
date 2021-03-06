@@ -42,6 +42,7 @@ var userModel = mongoose.model("users", userSchema);
 
 var adminSchema = new mongoose.Schema({
     "productname": String,
+    "email": String,
     "price": Number,
     "productimages": [],
     "activeStatus": String,
@@ -55,6 +56,7 @@ var checkoutformSchema = new mongoose.Schema({
     "name": String,
     "email": String,
     "phonenumber": String,
+    "productimages": [],
     "address": String,
     "status": String,
     "orders": Array,

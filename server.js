@@ -214,6 +214,7 @@ app.post('/admindashboard', (req, res, next) => {
             if (user.role === "admin") {
                 var admindata = new adminModel({
                     "productname": req.body.productname,
+                    "email": user.email,
                     "price": req.body.price,
                     "productimages": req.body.productimages,
                     "activeStatus": req.body.activeStatus,
@@ -305,42 +306,59 @@ app.post('/checkoutForm', (req, res, next) => {
     userModel.findOne({ email: req.body.jToken.email }, (err, user) => {
         console.log("this email find", req.body.jToken.email);
         if (!err) {
-            checkoutformModel.create({
-                "name": req.body.name,
-                "email": user.email,
-                "phonenumber": req.body.phonenumber,
-                "status": "IS Review",
-                "address": req.body.address,
-                "orders": req.body.orders,
-                "totalPrice": req.body.totalPrice
-            }).then((data) => {
-                res.send({
-                    status: 200,
-                    message: "Order Done",
-                    data: data
-                })
-            }).catch((err) => {
-                res.send({
-                    status: 500,
-                    message: "Order Err" + err
-                })
+            adminModel.findOne({ email: req.body.jToken.email }, (err, user) => {
+                console.log("this email find ya walii han", user);
+                console.log("this email find ya walii han", user);
+
+                // if (!err) {
+                //     if (!err) {
+                //         checkoutformModel.create({
+                //             "name": req.body.name,
+                //             "email": user.email,
+                //             "phonenumber": req.body.phonenumber,
+                //             "status": "IS Review",
+                //             "address": req.body.address,
+                //             "orders": req.body.orders,
+                //             "totalPrice": req.body.totalPrice,
+                //             "productimages": user.productimages
+                //         }).then((data) => {
+                //             res.send({
+                //                 status: 200,
+                //                 message: "Order Done",
+                //                 data: data
+                //             })
+                //         }).catch((err) => {
+                //             res.send({
+                //                 status: 500,
+                //                 message: "Order Err" + err
+                //             })
+                //         })
+                //     }
+                // }
+            })
+        } else {
+            res.send({
+                message: err,
+                status: 404
             })
         }
+
     })
 })
 
 app.get('/myorder', (req, res, next) => {
 
-    checkoutformModel.findOne({ email: req.body.jToken.email }, (err, user) => {
+    userModel.findOne({ email: req.body.jToken.email }, (err, user) => {
         if (user) {
             checkoutformModel.find({ email: req.body.jToken.email }, (err, data) => {
                 if (data) {
                     res.send({
-                        data: data
+                        data: data,
+                        status: 200
                     })
                 }
                 else {
-                    res.send(err)
+                    res.status(404).send(err)
                 }
             })
         } else {
@@ -348,7 +366,22 @@ app.get('/myorder', (req, res, next) => {
         }
     })
 });
-
+app.get('/getorder', (req, res, next) => {
+    checkoutformModel.find({}, (err, data) => {
+        if (!err) {
+            res.send({
+                data: data,
+                status: 200
+            });
+        }
+        else {
+            res.send({
+                message: 'error' + err,
+                status: 404
+            })
+        }
+    })
+})
 
 
 
@@ -356,3 +389,4 @@ app.get('/myorder', (req, res, next) => {
 server.listen(PORT, () => {
     console.log("Server is Running:", PORT);
 });
+
