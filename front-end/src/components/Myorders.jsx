@@ -21,6 +21,17 @@ export default function Myorders() {
     }, [])
 
     console.log("chal beta ", getdata)
+    getdata.map((v) => {
+        return (
+            <>
+                {v.orders.map((s) => {
+                    return (
+                        console.log("ab ya batay kia han", s)
+                    )
+                })}
+            </>
+        )
+    })
     return (
         <MDBContainer>
             <MDBRow>
@@ -41,14 +52,14 @@ export default function Myorders() {
                     <MDBTableBody>
                         {getdata.map((e) => (
                             <tr>
-                                <th></th>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <th key={e._id}>{e._id}</th>
+                                <td>{e.name}</td>
+                                <td>{e.email}</td>
+                                <td>{e.phonenumber}</td>
+                                <td>{e.address}</td>
+                                <td>{e.status}</td>
+                                <td>{e.orders.length}</td>
+                                <td>{e.totalPrice}</td>
                             </tr>
                         ))}
                     </MDBTableBody>

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext";
+// import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext";
 import {
     useHistory
 } from "react-router-dom";
 // import LogoutButton from "./logoutButton";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import { MDBRow } from 'mdbreact';
 import Basket from './Basket';
 
 
@@ -13,19 +13,19 @@ import Basket from './Basket';
 function Dashboard() {
 
     let url = 'http://localhost:5000'
-    const globalState = useGlobalState();
-    const setGlobalState = useGlobalStateUpdate();
+    // const globalState = useGlobalState();
+    // const setGlobalState = useGlobalStateUpdate();
     const [produt, setProducts] = useState([]);
     const [cartItem, setCartItem] = useState([]);
 
     const [show, ShowHide] = useState(true);
 
 
-    let history = useHistory()
+    // let history = useHistory()
     useEffect(() => {
         axios({
             method: 'get',
-            url: 'http://localhost:5000/getProducts',
+            url: url + '/getProducts',
             withCredentials: true
         }).then((response) => {
             // console.log(response.data.data)

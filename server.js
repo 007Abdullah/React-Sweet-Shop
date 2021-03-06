@@ -332,21 +332,21 @@ app.post('/checkoutForm', (req, res, next) => {
 app.get('/myorder', (req, res, next) => {
 
     checkoutformModel.findOne({ email: req.body.jToken.email }, (err, user) => {
-        if (!err) {
-            res.send({
-                message: "Order Post",
-                status: 200,
-                data: user
-            });
+        if (user) {
+            checkoutformModel.find({ email: req.body.jToken.email }, (err, data) => {
+                if (data) {
+                    res.send({
+                        data: data
+                    })
+                }
+                else {
+                    res.send(err)
+                }
+            })
+        } else {
+            res.send(err)
         }
-        else {
-            res.send({
-                message: "Error" + err,
-                status: 404
-            });
-        }
-    });
-
+    })
 });
 
 
