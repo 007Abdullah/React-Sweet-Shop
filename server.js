@@ -303,42 +303,32 @@ app.post('/checkoutForm', (req, res, next) => {
             status: 300
         });
     }
-    userModel.findOne({ email: req.body.jToken.email }, (err, user) => {
-        console.log("this email find", req.body.jToken.email);
+    adminModel.findOne(req.body.jToken.email, 'email productimages', (err, user) => {
         if (!err) {
-            adminModel.findOne({ email: req.body.jToken.email }, (err, user) => {
-                console.log("this email find ya walii han", user);
-                console.log("this email find ya walii han", user);
-
-                // if (!err) {
-                //     if (!err) {
-                //         checkoutformModel.create({
-                //             "name": req.body.name,
-                //             "email": user.email,
-                //             "phonenumber": req.body.phonenumber,
-                //             "status": "IS Review",
-                //             "address": req.body.address,
-                //             "orders": req.body.orders,
-                //             "totalPrice": req.body.totalPrice,
-                //             "productimages": user.productimages
-                //         }).then((data) => {
-                //             res.send({
-                //                 status: 200,
-                //                 message: "Order Done",
-                //                 data: data
-                //             })
-                //         }).catch((err) => {
-                //             res.send({
-                //                 status: 500,
-                //                 message: "Order Err" + err
-                //             })
-                //         })
-                //     }
-                // }
+            checkoutformModel.create({
+                "name": req.body.name,
+                "email": user.email,
+                "phonenumber": req.body.phonenumber,
+                "productimages": user.productimages,
+                "status": "IS Review",
+                "address": req.body.address,
+                "orders": req.body.orders,
+                "totalPrice": req.body.totalPrice
+            }).then((data) => {
+                res.send({
+                    status: 200,
+                    message: "Order Done",
+                    data: data
+                })
+            }).catch((err) => {
+                res.send({
+                    status: 500,
+                    message: "Order Err" + err
+                })
             })
         } else {
             res.send({
-                message: err,
+                message: "Error" + err,
                 status: 404
             })
         }
@@ -377,6 +367,27 @@ app.get('/getorder', (req, res, next) => {
         else {
             res.send({
                 message: 'error' + err,
+                status: 404
+            })
+        }
+    })
+})
+
+app.post('/updateStatus', (req, res, next) => {
+    checkoutformModel.findById({ _id: req.body.id }, (err, data) => {
+        if (data) {
+            data.updateOne({ status: req.body.status }, (err, updatestatus) => {
+                if (updatestatus) {
+                    res.send({
+                        message: "Status Update"
+                    })
+                } else {
+                    res.send(err)
+                }
+            })
+        } else {
+            res.send({
+                message: JSON.parse(err),
                 status: 404
             })
         }

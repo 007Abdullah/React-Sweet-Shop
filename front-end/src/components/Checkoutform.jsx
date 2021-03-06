@@ -32,11 +32,10 @@ function Checkout() {
                 totalPrice: globalState.cartData.totalPrice
             }, withCredentials: true
         }).then((response) => {
-            if (response.data.status === 200) {
-                alert(response.data.message);
-            } else {
-                alert(response.data.message);
-            }
+            console.log("this is not working why :", response.message)
+
+            alert(response.data.message);
+
         }).catch((error) => {
             console.log(error);
         });
