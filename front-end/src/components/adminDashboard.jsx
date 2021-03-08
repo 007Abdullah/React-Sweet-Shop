@@ -41,6 +41,22 @@ function AdminDashboard() {
 
     }
 
+    function delet(id) {
+        axios({
+            method: 'post',
+            url: url + '/Ordercancel',
+            data: {
+                id: id,
+                status: "Order Cancel"
+            },
+            withCredentials: true
+        }).then((response) => {
+            alert(response.data.message)
+        }).catch((err) => {
+            console.log(err)
+        })
+
+    }
 
     return (
         <>
@@ -76,7 +92,9 @@ function AdminDashboard() {
                                             updateStatus(e._id)
                                         }}>Confirm Order</button>
                                         <button type="button" class="btn btn-danger btn-sm px-3 mb-2 material-tooltip-main"
-                                            data-toggle="tooltip" data-placement="top" title="Add to wishlist" ><i class="fas fa-trash-alt"></i></button>
+                                            data-toggle="tooltip" data-placement="top" title="Add to wishlist" onClick={() => {
+                                                delet(e._id)
+                                            }}><i class="fas fa-trash-alt"></i></button>
 
 
                                     </div> </td>

@@ -394,7 +394,26 @@ app.post('/updateStatus', (req, res, next) => {
         }
     })
 })
-
+app.post('/Ordercancel', (req, res, next) => {
+    order.findById({ _id: req.body.id }, (err, data) => {
+        if (data) {
+            data.updateOne({ status: req.body.status }, (err, updatestatus) => {
+                if (updatestatus) {
+                    res.send({
+                        message: "Order Cancel"
+                    })
+                } else {
+                    res.send(err)
+                }
+            })
+        } else {
+            res.send({
+                message: JSON.parse(err),
+                status: 404
+            })
+        }
+    })
+})
 
 
 
