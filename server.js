@@ -10,7 +10,7 @@ var path = require('path')
 const multer = require('multer');
 const fs = require('fs');
 const admin = require("firebase-admin");
-var { userModel, adminModel, checkoutformModel } = require("./dbrepo/models");
+var { userModel, adminModel, order } = require("./dbrepo/models");
 
 var { SERVER_SECRET } = require("./core/index");
 
@@ -212,7 +212,32 @@ app.post('/admindashboard', (req, res, next) => {
     userModel.findById(req.body.jToken.id, 'email role', function (err, user) {
         if (!err) {
             if (user.role === "admin") {
-                var admindata = new adminModel({
+                // var admindata = new adminModel({
+                //     "productname": req.body.productname,
+                //     "email": user.email,
+                //     "price": req.body.price,
+                //     "productimages": req.body.productimages,
+                //     "activeStatus": req.body.activeStatus,
+                //     "stock": req.body.stock,
+                //     "description": req.body.description
+                // })
+                // admindata.save((err, data) => {
+                //     if (!err) {
+                //         res.send({
+                //             message: "Product Add",
+                //             status: 200,
+                //             data: data
+                //         });
+                //     }
+                //     else {
+                //         console.log(err);
+                //         res.send({
+                //             message: "User Create Error " + JSON.stringify(err),
+                //             status: 500
+                //         });
+                //     }
+                // });
+                adminModel.create({
                     "productname": req.body.productname,
                     "email": user.email,
                     "price": req.body.price,
@@ -220,50 +245,26 @@ app.post('/admindashboard', (req, res, next) => {
                     "activeStatus": req.body.activeStatus,
                     "stock": req.body.stock,
                     "description": req.body.description
-                })
-                admindata.save((err, data) => {
-                    if (!err) {
+                }, function (err, data) {
+                    if (err) {
                         res.send({
-                            message: "Product Add",
-                            status: 200,
-                            data: data
+                            message: " DB ERROR",
+                            status: 404
                         });
                     }
-                    else {
-                        console.log(err);
+                    else if (data) {
                         res.send({
-                            message: "User Create Error " + JSON.stringify(err),
+                            status: 200,
+                            message: "Product Add",
+                            data: data
+                        });
+                    } else {
+                        res.send({
+                            message: "err",
                             status: 500
                         });
                     }
-                });
-                // adminModel.create({
-                //     "productname": req.body.productname,
-                //     "price": req.body.price,
-                //     "productimages": req.body.productimages,
-                //     "activeStatus": req.body.activeStatus,
-                //     "stock": req.body.stock,
-                //     "description": req.body.description
-                // }, function (err, data) {
-                //     if (err) {
-                //         res.send({
-                //             message: " DB ERROR",
-                //             status: 404
-                //         });
-                //     }
-                //     else if (data) {
-                //         res.send({
-                //             status: 200,
-                //             message: "Product Add",
-                //             data: data
-                //         });
-                //     } else {
-                //         res.send({
-                //             message: "err",
-                //             status: 500
-                //         });
-                //     }
-                // })
+                })
             } else {
                 res.send({
                     message: "Only Edit  Admin",
@@ -296,20 +297,20 @@ app.get('/getProducts', (req, res, next) => {
         }
     })
 })
-app.post('/checkoutForm', (req, res, next) => {
+app.post('/order', (req, res, next) => {
     if (!req.body.name || !req.body.phonenumber || !req.body.address || !req.body.orders || !req.body.totalPrice) {
         res.send({
             message: "Please Provide All Info",
             status: 300
         });
     }
-    adminModel.findOne(req.body.jToken.email, 'email productimages', (err, user) => {
+    userModel.findById(req.body.jToken.id, 'email ', function (err, user) {
+        console.log('latest body', user);
         if (!err) {
-            checkoutformModel.create({
+            order.create({
                 "name": req.body.name,
                 "email": user.email,
                 "phonenumber": req.body.phonenumber,
-                "productimages": user.productimages,
                 "status": "IS Review",
                 "address": req.body.address,
                 "orders": req.body.orders,
@@ -340,7 +341,7 @@ app.get('/myorder', (req, res, next) => {
 
     userModel.findOne({ email: req.body.jToken.email }, (err, user) => {
         if (user) {
-            checkoutformModel.find({ email: req.body.jToken.email }, (err, data) => {
+            order.find({ email: req.body.jToken.email }, (err, data) => {
                 if (data) {
                     res.send({
                         data: data,
@@ -357,7 +358,7 @@ app.get('/myorder', (req, res, next) => {
     })
 });
 app.get('/getorder', (req, res, next) => {
-    checkoutformModel.find({}, (err, data) => {
+    order.find({}, (err, data) => {
         if (!err) {
             res.send({
                 data: data,
@@ -374,7 +375,7 @@ app.get('/getorder', (req, res, next) => {
 })
 
 app.post('/updateStatus', (req, res, next) => {
-    checkoutformModel.findById({ _id: req.body.id }, (err, data) => {
+    order.findById({ _id: req.body.id }, (err, data) => {
         if (data) {
             data.updateOne({ status: req.body.status }, (err, updatestatus) => {
                 if (updatestatus) {

@@ -56,14 +56,13 @@ var checkoutformSchema = new mongoose.Schema({
     "name": String,
     "email": String,
     "phonenumber": String,
-    "productimages": [],
     "address": String,
     "status": String,
     "orders": Array,
     "totalPrice": String,
     "createdOn": { "type": Date, 'Default': Date.now }
 })
-var checkoutformModel = mongoose.model('checkoutform', checkoutformSchema);
+var order = mongoose.model('order', checkoutformSchema);
 
 
 
@@ -73,7 +72,7 @@ var checkoutformModel = mongoose.model('checkoutform', checkoutformSchema);
 module.exports = {
     userModel: userModel,
     adminModel: adminModel,
-    checkoutformModel: checkoutformModel
+    order: order
     // orderModel: orderModel
     // others
 }

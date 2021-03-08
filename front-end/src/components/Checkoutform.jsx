@@ -23,7 +23,7 @@ function Checkout() {
         event.preventDefault();
         axios({
             method: 'post',
-            url: url + '/checkoutForm',
+            url: url + '/order',
             data: {
                 name: uname.current.value,
                 phonenumber: number.current.value,
@@ -32,7 +32,6 @@ function Checkout() {
                 totalPrice: globalState.cartData.totalPrice
             }, withCredentials: true
         }).then((response) => {
-            console.log("this is not working why :", response.message)
 
             alert(response.data.message);
 

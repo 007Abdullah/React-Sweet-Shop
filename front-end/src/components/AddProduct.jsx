@@ -47,7 +47,6 @@ export default function AddProduct() {
                 activeStatus: activeStatus.current.value,
                 stock: stock.current.value,
                 description: description.current.value,
-                // ["http://sdfsdfsdfsf", "wwefwfwef"]
             }, withCredentials: true
         }).then((response) => {
             if (response.data.status === 200) {
