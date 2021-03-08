@@ -8,7 +8,6 @@ let url = 'http://localhost:5000'
 function AdminDashboard() {
 
     const [data, setData] = useState([]);
-
     useEffect(() => {
         axios({
             method: 'get',
@@ -20,7 +19,7 @@ function AdminDashboard() {
         }).catch((err) => {
             console.log(err)
         })
-    }, [])
+    }, [data])
 
     // console.log('which come from server', data)
 
@@ -41,6 +40,8 @@ function AdminDashboard() {
         })
 
     }
+
+
     return (
         <>
             <MDBContainer>
@@ -60,19 +61,25 @@ function AdminDashboard() {
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
-                            {data.map((e) => (
+                            {data.map((e, i) => (
                                 <tr>
                                     <th key={e._id}>{e._id}</th>
                                     <td>{e.name}</td>
                                     <td>{e.email}</td>
                                     <td>{e.phonenumber}</td>
                                     <td>{e.address}</td>
-                                    <td>{e.status}</td>
+                                    <td><h5>{e.status}</h5></td>
                                     <td>{e.orders.length}</td>
                                     <td>{e.totalPrice}</td>
-                                    <td><Button onClick={() => {
-                                        updateStatus(e._id)
-                                    }}>Confirm Order</Button></td>
+                                    <td> <div class="text-center pt-4">
+                                        <button type="button" class="btn btn-light btn-sm mr-1 mb-2" onClick={() => {
+                                            updateStatus(e._id)
+                                        }}>Confirm Order</button>
+                                        <button type="button" class="btn btn-danger btn-sm px-3 mb-2 material-tooltip-main"
+                                            data-toggle="tooltip" data-placement="top" title="Add to wishlist" ><i class="fas fa-trash-alt"></i></button>
+
+
+                                    </div> </td>
                                 </tr>
                             ))}
                         </MDBTableBody>
