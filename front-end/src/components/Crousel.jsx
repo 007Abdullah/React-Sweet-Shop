@@ -7,7 +7,7 @@ import React from 'react'
 export default function Carousel(props) {
 
     return (
-        <div style={{ width: "25%" }}>
+        <div style={{ width: "100%", height: "500px" }}>
             <div id="carouselExampleIndicators" class="carousel slide" data-mdb-ride="carousel">
                 <div class="carousel-indicators">
                     <button

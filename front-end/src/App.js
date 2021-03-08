@@ -26,8 +26,8 @@ function App() {
 
   return (
     <>
-      <nav>
-        <Navbar bg="dark" variant="dark">
+      <nav className="sticky-top">
+        <Navbar bg="dark" variant="dark" >
           {(globalState.role === 'admin') ?
             <>
               <Nav className="mr-auto">
