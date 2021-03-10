@@ -1,123 +1,100 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext";
+import { useGlobalState, useGlobalStateUpdate } from "./../context/globalContext";
 import {
-    useHistory
+  useHistory
 } from "react-router-dom";
 // import LogoutButton from "./logoutButton";
 import { MDBRow } from 'mdbreact';
 import Basket from './Basket';
+import './dashboard.css'
+
 
 
 
 function Dashboard() {
 
-    let url = 'http://localhost:5000'
-    // const globalState = useGlobalState();
-    // const setGlobalState = useGlobalStateUpdate();
-    const [produt, setProducts] = useState([]);
-    const [cartItem, setCartItem] = useState([]);
+  let url = 'http://localhost:5000'
+  const globalState = useGlobalState();
+  const setGlobalState = useGlobalStateUpdate();
+  const [produt, setProducts] = useState([]);
 
-    const [show, ShowHide] = useState(true);
-
-
-    // let history = useHistory()
-    useEffect(() => {
-        axios({
-            method: 'get',
-            url: url + '/getProducts',
-            withCredentials: true
-        }).then((response) => {
-            // console.log(response.data.data)
-            setProducts(response.data.products)
-        }).catch((err) => {
-            console.log(err)
-        })
-    }, [])
-    console.log(produt)
-
-    function aDD(e, index) {
-        console.log('index', index);
-        console.log("cart is ", cartItem);
-        const exist = cartItem.find((x) => x._id === e._id)
-        if (exist) {
-            setCartItem(
-                cartItem.map((x) =>
-                    x._id === e._id ? { ...exist, stock: exist.stock + 1 } : x
-                )
-            )
-            // var prevProducts = [...cartItem];
-            // prevProducts[index].stock =  prevProducts[index].stock + 1;
-            // setCartItem(prevProducts);
+  const [show, ShowHide] = useState(true);
 
 
-        } else {
-            setCartItem([...cartItem, { ...e, stock: 1 }])
+  // let history = useHistory()
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: url + '/getProducts',
+      withCredentials: true
+    }).then((response) => {
 
-        }
+      setProducts(response.data.products)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }, [])
+  console.log("produt: ", produt)
 
+  function aDD(e, index) {
+    console.log('index', index);
+    console.log("cart is ", e);
 
+    e.qty = 1;
 
+    setGlobalState((prev) => {
 
-    }
+      let cartItems = prev.cart;
+      cartItems = [...cartItems, e]
 
-    function remove(e, index) {
-        const exist = cartItem.find((x) => x._id === e._id);
-        if (exist.stock === 1) {
-            setCartItem(cartItem.filter((x) => x._id !== e._id));
-        }
-        else {
-            setCartItem(
-                cartItem.map((x) =>
-                    x._id === e._id ? { ...exist, stock: exist.stock - 1 } : x
-                )
-            )
-        }
+      const newState = { ...prev, cart: cartItems };
 
-    }
+      localStorage.setItem("cart", JSON.stringify(newState.cart));
+      return newState
+    })
 
-    function removeItem(index) {
-        let getindex = [...cartItem]
-        getindex.splice(index, 1)
-        setCartItem(getindex)
-    }
-
-    function changeState() {
-        ShowHide(Prev => !Prev)
-    }
-
+  }
 
 
-    return (
-        <>
+  function changeState() {
+    ShowHide(Prev => !Prev)
+  }
 
-            <a className="btn btn-outline-success" onClick={changeState}
-                style={{ float: 'right' }} href><i class="fas fa-cart-plus mr-3" /><span>{cartItem.length}</span><span className="sr-only">(current)</span></a>
-            <MDBRow>
 
-                {show === true ? <main className="container">
-                    <h1 className="text-center mt-1">Products</h1>
-                    <div className="row">
-                        {produt.map((e, index) => (
-                            <div className="col-md-3 mt-3" key={e.id}>
-                                <div style={{ textAlign: 'center' }}>
-                                    <img className="w-100" height="200" src={e.productimages[0]} alt={e.productname} />
-                                    <h3 style={{ textAlign: 'center', marginTop: '10px' }}>{e.productname}</h3>
-                                    <p class="card-text">{e.description}</p>
-                                    <div>PKR: {e.price}/-Per kg</div>
-                                    <div>
-                                        <button className="btn btn-primary" onClick={() => aDD(e, index)}>Add To Cart</button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </main> :
+  return (
+    <>
 
-                    <Basket cartItem={cartItem} aDD={aDD} remove={remove} removeItem={removeItem} />}
-            </MDBRow>
-        </>
-    )
+      <a className="btn btn-outline-success" onClick={changeState}
+        style={{ float: 'right' }} href><i class="fas fa-cart-plus mr-3" /><span>{globalState.cart.length}</span><span className="sr-only">(current)</span></a>
+      <MDBRow>
+
+        {show === true ? <main className="container">
+          <h1 className="text-center mt-1">Products</h1>
+          <div className="row">
+            {produt.map((e, index) => (
+              <div className="col-md-3 mt-3" key={index}>
+                <div style={{ textAlign: 'center' }}>
+                  <img className="w-100" height="200" src={e.productimages[0]} alt={e.productname} />
+                  <h3 style={{ textAlign: 'center', marginTop: '10px' }}>{e.productname}</h3>
+                  <p class="card-text">{e.description}</p>
+                  <div>PKR: {e.price}/-Per kg</div>
+                  {/* <div> */}
+                  <button className="btn btn-primary" onClick={() => { aDD(e) }}>Add To Cart</button>
+
+                  {/* </div> */}
+                </div>
+              </div>
+            ))}
+          </div>
+        </main> :
+
+          <Basket />}
+      </MDBRow>
+
+      {'===>' + JSON.stringify(globalState.cart)}
+    </>
+  )
 }
 
 export default Dashboard;
