@@ -21,6 +21,10 @@ import AddProduct from './components/AddProduct';
 import Checkout from './components/Checkoutform';
 import Basket from './components/Basket';
 import Myorders from './components/Myorders';
+import AdminHistory from './components/AdminHistory'
+
+
+
 function App() {
   const globalState = useGlobalState();
 
@@ -34,6 +38,7 @@ function App() {
                 <Nav.Link><Link to="/">Admin Dashboard</Link></Nav.Link>
 
                 <Nav.Link><Link to="/addproducts">Add Product</Link></Nav.Link>
+                <Nav.Link><Link to="/orderhistory">Order History</Link></Nav.Link>
               </Nav>
               <LogoutButton />
             </> : null
@@ -113,6 +118,8 @@ function App() {
             <Route exact path="/"><AdminDashboard /></Route>
 
             <Route path="/addproducts"><AddProduct /></Route>
+            <Route path="/orderhistory"><AdminHistory /></Route>
+
 
             <Route path="*" ><Redirect to="/" /></Route>
 

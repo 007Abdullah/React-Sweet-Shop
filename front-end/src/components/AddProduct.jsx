@@ -172,7 +172,7 @@ export default function AddProduct() {
                         </label>
                             <div className="row justify-content align-items-lg-start d-flex" required>
                                 {images.map((eachImage, index) => (
-                                    <div className='col-4'>
+                                    <div className='col-4' key={index}>
                                         <form onSubmit={check} required>
                                             <div className="file-upload" key={index}>
                                                 <img src={eachImage} alt="FallBack" id="show_pic" required ref={imgref} />;
@@ -202,7 +202,7 @@ export default function AddProduct() {
                             {data.map((e, i) => {
                                 return (
                                     <>
-                                        <div class="card mb-3" style={{ maxWidth: '540px' }}>
+                                        <div class="card mb-3" key={i} style={{ maxWidth: '540px' }}>
                                             <div class="row g-0">
                                                 <div class="col-md-4">
                                                     <img

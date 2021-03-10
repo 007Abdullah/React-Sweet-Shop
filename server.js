@@ -15,6 +15,7 @@ var { userModel, adminModel, order } = require("./dbrepo/models");
 var { SERVER_SECRET } = require("./core/index");
 
 var authRoutes = require("./routes/auth");
+const { json } = require("body-parser");
 
 var app = express();
 
@@ -314,7 +315,8 @@ app.post('/order', (req, res, next) => {
                 "status": "IS Review",
                 "address": req.body.address,
                 "orders": req.body.orders,
-                "totalPrice": req.body.totalPrice
+                "totalPrice": req.body.totalPrice,
+                // "createdOn": new Date().toLocaleDateString()
             }).then((data) => {
                 res.send({
                     status: 200,
@@ -343,6 +345,7 @@ app.get('/myorder', (req, res, next) => {
         if (user) {
             order.find({ email: req.body.jToken.email }, (err, data) => {
                 if (data) {
+                    console.log("is ma date a rahe han ", data)
                     res.send({
                         data: data,
                         status: 200
@@ -414,6 +417,25 @@ app.post('/Ordercancel', (req, res, next) => {
         }
     })
 })
+
+app.get('/ordercancel', (req, res, next) => {
+    order.find({ status: "Order Cancel" }, (err, data) => {
+        if (data) {
+            res.send({
+                data: data,
+                status: 200
+            })
+        }
+        else {
+            res.send({
+                message: err,
+                status: 404
+            })
+        }
+
+    })
+})
+
 
 
 

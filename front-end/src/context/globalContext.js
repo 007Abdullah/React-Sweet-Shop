@@ -10,7 +10,10 @@ export function GlobalStateProvider({ children }) {
     const [data, setData] = useState({
         user: null,
         role: null,
+        cart: (localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : []
     })
+
+
 
     useEffect(() => {
         axios({
@@ -19,12 +22,13 @@ export function GlobalStateProvider({ children }) {
             withCredentials: true
         }).then((res) => {
             console.log("context response", res.data.profile);
+
             if (res.data.status === 200) {
 
                 setData((prev) => ({
                     ...prev,
                     user: res.data.profile,
-                    role: res.data.profile.role
+                    role: res.data.profile.role,
                 }))
             }
         }).catch((err) => {
@@ -49,4 +53,4 @@ export function GlobalStateProvider({ children }) {
             </GlobalStateUpdateContext.Provider>
         </GlobalStateContext.Provider>
     )
-} 
+}

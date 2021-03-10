@@ -36,7 +36,6 @@ function Dashboard() {
     })
   }, [])
   console.log("produt: ", produt)
-
   function aDD(e, index) {
     console.log('index', index);
     console.log("cart is ", e);
@@ -46,12 +45,20 @@ function Dashboard() {
     setGlobalState((prev) => {
 
       let cartItems = prev.cart;
+
       cartItems = [...cartItems, e]
 
-      const newState = { ...prev, cart: cartItems };
-
+      var found = prev.cart.filter((eachCartItem, i) => eachCartItem._id === e._id);
+      var newState;
+      if (found.length) {
+        newState = { ...prev }
+      }
+      else {
+        newState= { ...prev, cart: cartItems }
+      }
       localStorage.setItem("cart", JSON.stringify(newState.cart));
       return newState
+
     })
 
   }

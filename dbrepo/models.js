@@ -34,7 +34,7 @@ var userSchema = new mongoose.Schema({
     "password": String,
     "phone": String,
     "role": { "type": String, "default": "user" },
-    "createdOn": { "type": Date, "Default": Date.now },
+    "createdOn": { "type": Date, "default": Date.now },
     "activeSince": Date
 });
 
@@ -46,7 +46,7 @@ var adminSchema = new mongoose.Schema({
     "price": Number,
     "productimages": [],
     "activeStatus": String,
-    "stock": String,
+    "stock": Number,
     "description": String
 })
 
@@ -60,7 +60,7 @@ var checkoutformSchema = new mongoose.Schema({
     "status": String,
     "orders": Array,
     "totalPrice": String,
-    "createdOn": { "type": Date, 'Default': Date.now }
+    "createdOn": { "type": Date, 'default': Date.now }
 })
 var order = mongoose.model('order', checkoutformSchema);
 

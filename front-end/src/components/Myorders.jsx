@@ -13,25 +13,25 @@ export default function Myorders() {
             url: url + '/myorder',
             withCredentials: true
         }).then((response) => {
-            // console.log(response.data.data)
+            console.log(response.data.data, "is ma data kia a rha han date a rhe han")
             setData(response.data.data)
         }).catch((err) => {
             console.log(err)
         })
     }, [])
 
-    console.log("chal beta ", getdata)
-    getdata.map((v) => {
-        return (
-            <>
-                {v.orders.map((s) => {
-                    return (
-                        console.log("ab ya batay kia han", s)
-                    )
-                })}
-            </>
-        )
-    })
+
+    // getdata.map((v) => {
+    //     return (
+    //         <>
+    //             {v.orders.map((s) => {
+    //                 return (
+
+    //                 )
+    //             })}
+    //         </>
+    //     )
+    // })
     return (
         <MDBContainer>
             <MDBRow>
@@ -50,16 +50,16 @@ export default function Myorders() {
                         </tr>
                     </MDBTableHead>
                     <MDBTableBody>
-                        {getdata.map((e) => (
-                            <tr>
-                                <th key={e._id}>{e._id}</th>
+                        {getdata.map((e, i) => (
+                            <tr  key={i}>
+                                <th>{e._id}</th>
                                 <td>{e.name}</td>
                                 <td>{e.email}</td>
                                 <td>{e.phonenumber}</td>
                                 <td>{e.address}</td>
                                 <td>{e.status}</td>
                                 <td>{e.orders.length}</td>
-                                <td>{e.totalPrice}</td>
+                                <td>RS:{e.totalPrice}</td>
                             </tr>
                         ))}
                     </MDBTableBody>

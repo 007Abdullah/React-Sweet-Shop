@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react'
 import axios from 'axios';
+import { useEffect, useState } from 'react'
 import { MDBContainer, MDBRow, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
 
-
 let url = 'http://localhost:5000'
-
-function AdminDashboard() {
+export default function AdminHistory() {
 
     const [data, setData] = useState([]);
     useEffect(() => {
         axios({
             method: 'get',
-            url: url + '/getorder',
+            url: url + '/ordercancel',
             withCredentials: true
         }).then((response) => {
-            // console.log(response.data.data, '======> what ')
+            console.log(response.data.data, "ab pta chal ap abu ban gay")
             setData(response.data.data)
         }).catch((err) => {
             console.log(err)
         })
-    }, [data])
-    // Sir discuss  ----->
-
-    // console.log('which come from server', data)
+    }, [])
+    //discuss sir---->
 
 
     function updateStatus(id) {
@@ -41,24 +38,6 @@ function AdminDashboard() {
         })
 
     }
-
-    function delet(id) {
-        axios({
-            method: 'post',
-            url: url + '/Ordercancel',
-            data: {
-                id: id,
-                status: "Order Cancel"
-            },
-            withCredentials: true
-        }).then((response) => {
-            alert(response.data.message)
-        }).catch((err) => {
-            console.log(err)
-        })
-
-    }
-
     return (
         <>
             <MDBContainer>
@@ -92,12 +71,6 @@ function AdminDashboard() {
                                         <button type="button" class="btn btn-light btn-sm mr-1 mb-2" onClick={() => {
                                             updateStatus(e._id)
                                         }}>Confirm Order</button>
-                                        <button type="button" class="btn btn-danger btn-sm px-3 mb-2 material-tooltip-main"
-                                            data-toggle="tooltip" data-placement="top" title="Add to wishlist" onClick={() => {
-                                                delet(e._id)
-                                            }}><i class="fas fa-trash-alt"></i></button>
-
-
                                     </div> </td>
                                 </tr>
                             ))}
@@ -108,11 +81,6 @@ function AdminDashboard() {
                 </MDBRow>
             </MDBContainer>
         </>
+
     )
-
-
-
-
 }
-
-export default AdminDashboard;
