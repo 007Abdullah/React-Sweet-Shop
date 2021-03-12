@@ -2,22 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import { useGlobalState, useGlobalStateUpdate } from './../context/globalContext';
 import { MDBRow } from 'mdbreact';
-export default function Basket(props) {
+export default function Basket() {
 
     const globalState = useGlobalState();
     const globalStateUpdate = useGlobalStateUpdate();
-
     const history = useHistory();
-    const [totalPrice, setTotalPrice] = useState(0);
-    console.log(globalState, "global my cart")
+    const itemsPrice = globalState.cart.reduce((accumulator, current) => accumulator + current.qty * current.price, 0);
+    const totalPrice = itemsPrice;
+
+    console.log(globalState.cart, "global my cart");
+
 
 
 
     function increment(index) {
         console.log('increment ====>', index)
-
-
-
         globalStateUpdate((prev) => {
 
             let cart = prev.cart;
@@ -28,48 +27,41 @@ export default function Basket(props) {
 
             return { ...prev, cart: cart }
 
-
-
         })
-        // const exist = cartItem.find((x) => x._id === e._id);
-        // if (exist.stock === 1) {
-        //     setCartItem(cartItem.filter((x) => x._id !== e._id));
-        // }
-        // else {
-        //     setCartItem(
-        //         cartItem.map((x) =>
-        //             x._id === e._id ? { ...exist, stock: exist.stock - 1 } : x
-        //         )
-        //     )
-        // }
     }
 
     function decrement(index) {
         console.log('decrement index :', index)
-        // const exist = cartItem.find((x) => x._id === e._id);
-        // if (exist.stock === 1) {
-        //     setCartItem(cartItem.filter((x) => x._id !== e._id));
-        // }
-        // else {
-        //     setCartItem(
-        //         cartItem.map((x) =>
-        //             x._id === e._id ? { ...exist, stock: exist.stock - 1 } : x
-        //         )
-        //     )
-        // }
+
+        globalStateUpdate((prev) => {
+            let cart = prev.cart;
+            prev.cart[index].qty = prev.cart[index].qty === 1 ? 1 : prev.cart[index].qty - 1
+
+            localStorage.setItem('cart', JSON.stringify(cart))
+
+            return { ...prev, cart: cart }
+        })
+
     }
 
     function deleteFromCart(index) {
-        // let getindex = [...cartItem]
-        // getindex.splice(index, 1)
-        // setCartItem(getindex)
+        globalStateUpdate((prev) => {
+            let cart = prev.cart;
+
+            prev.cart = prev.cart.splice(index, 1);
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            return { ...prev, cart: cart }
+
+        })
     }
 
 
     function checkout() {
         globalStateUpdate(prev => ({
             ...prev,
-            // cartData: { cartItem: cartItem, totalPrice: totalPrice }
+            cart: { cart: globalState.cart, totalPrice: totalPrice }
         }))
         history.push('/Checkout')
     }
@@ -129,7 +121,7 @@ export default function Basket(props) {
                                                             <a href type="button" class="card-link-secondary small text-uppercase mr-3"><i
                                                                 class="fas fa-trash-alt mr-1"></i><span onClick={(e) => deleteFromCart(index)}>Remove item</span> </a>
                                                         </div>
-                                                        <p class="mb-0"><span><strong id="summary">{e.price}</strong></span></p>
+                                                        <p class="mb-0"><span><strong id="summary">{e.price * e.qty}</strong></span></p>
                                                     </div>
                                                 </div>
                                             </div>
