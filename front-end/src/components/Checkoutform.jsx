@@ -6,12 +6,14 @@ import { useGlobalState } from './../context/globalContext';
 const url = 'http://localhost:5000';
 function Checkout() {
     const globalState = useGlobalState();
-    globalState.cartData && globalState.cartData.cartItem.map(value => {
-        return (
-            delete value.description,
-            delete value.stock
-        )
-    })
+
+    console.log(globalState.cart.totalPrice, "total price merii jan")
+    // globalState.cart.map((value) => {
+    //     return <>
+    //         delete value.description
+    //         delete value.stock
+    //     </>
+    // })
 
     const uname = useRef();
     const number = useRef();
@@ -28,8 +30,8 @@ function Checkout() {
                 name: uname.current.value,
                 phonenumber: number.current.value,
                 address: address.current.value,
-                orders: globalState.cartData.cartItem,
-                totalPrice: globalState.cartData.totalPrice
+                orders: globalState.cart,
+                totalPrice: globalState.cart.totalPrice
             }, withCredentials: true
         }).then((response) => {
 

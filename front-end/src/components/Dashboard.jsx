@@ -54,7 +54,7 @@ function Dashboard() {
         newState = { ...prev }
       }
       else {
-        newState= { ...prev, cart: cartItems }
+        newState = { ...prev, cart: cartItems }
       }
       localStorage.setItem("cart", JSON.stringify(newState.cart));
       return newState
