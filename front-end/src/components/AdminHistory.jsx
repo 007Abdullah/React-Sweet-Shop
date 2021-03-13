@@ -13,8 +13,8 @@ export default function AdminHistory() {
             url: url + '/ordercancel',
             withCredentials: true
         }).then((response) => {
-            console.log(response.data.data, "ab pta chal ap abu ban gay")
             setData(response.data.data)
+
         }).catch((err) => {
             console.log(err)
         })
@@ -68,7 +68,7 @@ export default function AdminHistory() {
                                     <td>{e.orders.length}</td>
                                     <td>{e.totalPrice}</td>
                                     <td> <div class="text-center pt-4">
-                                        <button type="button" class="btn btn-light btn-sm mr-1 mb-2" onClick={() => {
+                                        <button type="button" id="check" class="btn btn-light btn-sm mr-1 mb-2" onClick={() => {
                                             updateStatus(e._id)
                                         }}>Confirm Order</button>
                                     </div> </td>

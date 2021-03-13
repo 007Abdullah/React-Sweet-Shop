@@ -7,7 +7,6 @@ import { GlobalStateProvider } from './context/globalContext';
 import { BrowserRouter as Router } from "react-router-dom"
 
 ReactDOM.render(
-
   <Router>
     <GlobalStateProvider>
       <App />

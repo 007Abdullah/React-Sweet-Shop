@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MDBContainer, MDBRow, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
-
+import moment from 'moment';
 
 let url = 'http://localhost:5000'
 
 function AdminDashboard() {
 
     const [data, setData] = useState([]);
+
     useEffect(() => {
         axios({
             method: 'get',
@@ -15,11 +16,13 @@ function AdminDashboard() {
             withCredentials: true
         }).then((response) => {
             // console.log(response.data.data, '======> what ')
+            console.log('why status come in ===>', response.data.data.status)
             setData(response.data.data)
+
         }).catch((err) => {
             console.log(err)
         })
-    }, [data])
+    }, [])
     // Sir discuss  ----->
 
     // console.log('which come from server', data)
@@ -36,6 +39,7 @@ function AdminDashboard() {
             withCredentials: true
         }).then((response) => {
             alert(response.data.message)
+            
         }).catch((err) => {
             console.log(err)
         })
@@ -75,26 +79,50 @@ function AdminDashboard() {
                                 <th>Status</th>
                                 <th>Orders</th>
                                 <th>Total Price</th>
+                                <th>Date</th>
+                                <th>Order Status</th>
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
-                            {data.map((e, i) => (
+                            {data.map((eachItem, i) => (
                                 <tr key={i}>
-                                    <th >{e._id}</th>
-                                    <td>{e.name}</td>
-                                    <td>{e.email}</td>
-                                    <td>{e.phonenumber}</td>
-                                    <td>{e.address}</td>
-                                    <td><h5>{e.status}</h5></td>
-                                    <td>{e.orders.length}</td>
-                                    <td>{e.totalPrice}</td>
+                                    <th >{eachItem._id}</th>
+                                    <td>{eachItem.name}</td>
+                                    <td>{eachItem.email}</td>
+                                    <td>{eachItem.phonenumber}</td>
+                                    <td>{eachItem.address}</td>
+                                    <td><h5>{eachItem.status}</h5></td>
+
+                                    <td>{
+                                        eachItem.orders.map((v, i) => {
+                                            return (
+                                                <>
+                                                    {v.cart.map((e) => {
+                                                        return (
+                                                            <>
+                                                                <tr>
+                                                                    <td >{e.productname}</td>
+                                                                    <td >{e.qty} kg</td>
+
+                                                                </tr>
+
+                                                            </>
+                                                        )
+                                                    })}
+
+                                                </>
+                                            )
+                                        })
+                                    }</td>
+                                    <td>{eachItem.totalPrice}</td>
+                                    <td>{moment(eachItem.createdOn).format('LLLL')}</td>
                                     <td> <div class="text-center pt-4">
-                                        <button type="button" class="btn btn-light btn-sm mr-1 mb-2" onClick={() => {
-                                            updateStatus(e._id)
+                                        <button type="button" class="btn btn-light btn-sm mr-1 mb-2" id="check" onClick={() => {
+                                            updateStatus(eachItem._id)
                                         }}>Confirm Order</button>
                                         <button type="button" class="btn btn-danger btn-sm px-3 mb-2 material-tooltip-main"
                                             data-toggle="tooltip" data-placement="top" title="Add to wishlist" onClick={() => {
-                                                delet(e._id)
+                                                delet(eachItem._id)
                                             }}><i class="fas fa-trash-alt"></i></button>
 
 

@@ -361,7 +361,7 @@ app.get('/myorder', (req, res, next) => {
     })
 });
 app.get('/getorder', (req, res, next) => {
-    order.find({}, (err, data) => {
+    order.find({ status: 'IS Review' }, (err, data) => {
         if (!err) {
             res.send({
                 data: data,
@@ -383,7 +383,9 @@ app.post('/updateStatus', (req, res, next) => {
             data.updateOne({ status: req.body.status }, (err, updatestatus) => {
                 if (updatestatus) {
                     res.send({
-                        message: "Status Update"
+                        message: "Status Update",
+                        data: data,
+                        status: 200
                     })
                 } else {
                     res.send(err)
@@ -419,7 +421,7 @@ app.post('/Ordercancel', (req, res, next) => {
 })
 
 app.get('/ordercancel', (req, res, next) => {
-    order.find({ status: "Order Cancel" }, (err, data) => {
+    order.find({ status: { $in: ["Order Cancel", "Order confirmed"] } }, (err, data) => {
         if (data) {
             res.send({
                 data: data,

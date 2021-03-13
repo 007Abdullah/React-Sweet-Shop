@@ -13,7 +13,7 @@ export default function Myorders() {
             url: url + '/myorder',
             withCredentials: true
         }).then((response) => {
-            console.log(response.data.data, "is ma data kia a rha han date a rhe han")
+            
             setData(response.data.data)
         }).catch((err) => {
             console.log(err)
@@ -51,7 +51,7 @@ export default function Myorders() {
                     </MDBTableHead>
                     <MDBTableBody>
                         {getdata.map((e, i) => (
-                            <tr  key={i}>
+                            <tr key={i}>
                                 <th>{e._id}</th>
                                 <td>{e.name}</td>
                                 <td>{e.email}</td>

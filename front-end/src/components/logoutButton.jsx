@@ -20,8 +20,7 @@ function LogoutButton() {
                 alert(response.data.message)
                 // Router.History.back();
                 // history.goBack()
-
-                setGlobalState((prev) => ({ ...prev, loginStatus: false, role: "loggedout", user: null }))
+                setGlobalState((prev) => ({ ...prev, loginStatus: false, role: "loggedout", user: null, cart: [] }))
             }
         }, (error) => {
             console.log(error.message);
