@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/React-Sweet-Shop/static/css/main.7c67d2ea.chunk.css",
+    "main.js": "/React-Sweet-Shop/static/js/main.52e999ac.chunk.js",
+    "main.js.map": "/React-Sweet-Shop/static/js/main.52e999ac.chunk.js.map",
+    "runtime-main.js": "/React-Sweet-Shop/static/js/runtime-main.f531f9b9.js",
+    "runtime-main.js.map": "/React-Sweet-Shop/static/js/runtime-main.f531f9b9.js.map",
+    "static/css/2.a2889644.chunk.css": "/React-Sweet-Shop/static/css/2.a2889644.chunk.css",
+    "static/js/2.21716cdc.chunk.js": "/React-Sweet-Shop/static/js/2.21716cdc.chunk.js",
+    "static/js/2.21716cdc.chunk.js.map": "/React-Sweet-Shop/static/js/2.21716cdc.chunk.js.map",
+    "static/js/3.53cb332a.chunk.js": "/React-Sweet-Shop/static/js/3.53cb332a.chunk.js",
+    "static/js/3.53cb332a.chunk.js.map": "/React-Sweet-Shop/static/js/3.53cb332a.chunk.js.map",
+    "index.html": "/React-Sweet-Shop/index.html",
+    "static/css/2.a2889644.chunk.css.map": "/React-Sweet-Shop/static/css/2.a2889644.chunk.css.map",
+    "static/css/main.7c67d2ea.chunk.css.map": "/React-Sweet-Shop/static/css/main.7c67d2ea.chunk.css.map",
+    "static/js/2.21716cdc.chunk.js.LICENSE.txt": "/React-Sweet-Shop/static/js/2.21716cdc.chunk.js.LICENSE.txt",
+    "static/media/mdb.css": "/React-Sweet-Shop/static/media/arrow_right.0897f985.svg",
+    "static/media/all.min.css": "/React-Sweet-Shop/static/media/fa-solid-900.f4f93856.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f531f9b9.js",
+    "static/css/2.a2889644.chunk.css",
+    "static/js/2.21716cdc.chunk.js",
+    "static/css/main.7c67d2ea.chunk.css",
+    "static/js/main.52e999ac.chunk.js"
+  ]
+}
