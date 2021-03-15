@@ -57,7 +57,7 @@ app.use(morgan('dev'));
 
 
 
-app.use("/", express.static(path.resolve(path.join(__dirname, "./front-end/build"))))
+app.use("/", express.static(path.resolve(path.join(__dirname, "./front-end/build"))));
 
 app.use('/auth', authRoutes);
 
