@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Shop App Server",
   "main": "server.js",
+  "homepage": "http://007Abdullah.github.io/React-Sweet-Shop",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -25,6 +28,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.5.0",
     "fs": "0.0.1-security",
+    "gh-pages": "^3.1.0",
     "http": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.17",
