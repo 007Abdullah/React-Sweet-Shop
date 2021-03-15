@@ -5,18 +5,18 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cls && node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/007Abdullah/Sweet-Shop.git"
+    "url": "git+https://github.com/007Abdullah/React-Sweet-Shop.git"
   },
   "author": "M Abdullah",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/007Abdullah/Sweet-Shop/issues"
+    "url": "https://github.com/007Abdullah/React-Sweet-Shop/issues"
   },
-  "homepage": "https://github.com/007Abdullah/Sweet-Shop#readme",
+  "homepage": "https://github.com/007Abdullah/React-Sweet-Shop#readme",
   "dependencies": {
     "bcrypt-inzi": "^1.0.7",
     "body-parser": "^1.19.0",
