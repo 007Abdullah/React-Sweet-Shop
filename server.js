@@ -32,18 +32,20 @@ var upload = multer({ storage: storage })
 
 
 
-var serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT)
+var SERVICE_ACCOUNT = JSON.parse(process.env.SERVICE_ACCOUNT)
 
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(SERVICE_ACCOUNT),
     databaseURL: process.env.DATABASEURL
 });
 
-const bucket = admin.storage().bucket(process.env.BUCKET);
+const BUCKET = admin.storage().bucket(process.env.BUCKET);
 
 
 app.use(bodyParser.json());
+
+
 app.use(cookieParser());
 
 app.use(cors({
@@ -51,8 +53,8 @@ app.use(cors({
     credentials: true
 }));
 
-
 app.use(morgan('dev'));
+
 
 
 app.use("/", express.static(path.resolve(path.join(__dirname, "./front-end/build"))))
