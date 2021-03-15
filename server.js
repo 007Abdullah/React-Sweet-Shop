@@ -49,7 +49,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: ['http://localhost:3000', "https://sweet-shop-react.herokuapp.com"],
+    origin: ['http://localhost:3000', "https://sweet-shop-react.herokuapp.com/"],
     credentials: true
 }));
 
