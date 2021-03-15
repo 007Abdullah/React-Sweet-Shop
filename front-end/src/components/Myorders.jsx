@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBContainer } from 'mdbreact';
-
-const url = 'http://localhost:5000'
+import url from './BaseUrl'
+// const url = 'http://localhost:5000'
 export default function Myorders() {
 
     const [getdata, setData] = useState([]);
+    const [toggle, settoggle] = useState(true);
+
 
     useEffect(() => {
+        console.log('Running ');
         axios({
             method: 'get',
             url: url + '/myorder',
             withCredentials: true
         }).then((response) => {
-            
             setData(response.data.data)
+            // settoggle(!toggle)
         }).catch((err) => {
             console.log(err)
         })

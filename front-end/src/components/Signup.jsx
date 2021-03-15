@@ -8,8 +8,9 @@ import axios from "axios";
 import {
     useHistory
 } from "react-router-dom";
+import url from './BaseUrl'
 
-const url = 'http://localhost:5000'
+// const url = 'http://localhost:5000'
 function Signup() {
 
     const [email, setEmail] = useState('');

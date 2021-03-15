@@ -2,12 +2,15 @@ import React from 'react'
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import { MDBContainer, MDBRow, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
-
-let url = 'http://localhost:5000'
+import url from './BaseUrl'
+// let url = 'http://localhost:5000'
 export default function AdminHistory() {
 
     const [data, setData] = useState([]);
+    const [toggle, settoggle] = useState(true);
+
     useEffect(() => {
+        console.log("runnig")
         axios({
             method: 'get',
             url: url + '/ordercancel',
@@ -18,7 +21,7 @@ export default function AdminHistory() {
         }).catch((err) => {
             console.log(err)
         })
-    }, [])
+    }, [toggle])
     //discuss sir---->
 
 
@@ -33,6 +36,7 @@ export default function AdminHistory() {
             withCredentials: true
         }).then((response) => {
             alert(response.data.message)
+            settoggle(!toggle)
         }).catch((err) => {
             console.log(err)
         })

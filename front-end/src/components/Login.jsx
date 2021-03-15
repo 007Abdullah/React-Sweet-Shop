@@ -7,10 +7,10 @@ import './login.css'
 import axios from 'axios';
 import { useGlobalState, useGlobalStateUpdate } from './../context/globalContext'
 import { useHistory } from 'react-router-dom';
+import url from './BaseUrl'
 
 
-
-const url = 'http://localhost:5000'
+// const url = 'http://localhost:5000'
 function Login() {
     let [show, setShow] = useState()
     const globalState = useGlobalState();

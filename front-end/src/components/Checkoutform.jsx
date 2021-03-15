@@ -2,8 +2,8 @@ import React, { useRef } from 'react'
 import { MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from 'axios';
 import { useGlobalState } from './../context/globalContext';
-
-const url = 'http://localhost:5000';
+import url from './BaseUrl'
+// const url = 'http://localhost:5000';
 function Checkout() {
     const globalState = useGlobalState();
 

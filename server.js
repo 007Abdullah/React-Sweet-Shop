@@ -32,33 +32,22 @@ var upload = multer({ storage: storage })
 
 
 
-var serviceAccount = {
-    "type": "service_account",
-    "project_id": "sweetshop-2aac1",
-    "private_key_id": "7754248c6afd60a09cb5cf9d5ba6eabdfcf4a87c",
-    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCtceOkDvFdcxv8\ne7vNJILagfk00UcLOZfPxqno8IPO5qRo0qN+aeY0E16Pm8ipztFJqWk421xrVHd7\ny4MhhfxGazdIiBD5fmlD9yW40ONaM553KwxK1F0NHsnGMef/4X0HpDAMiyZfrPIc\nG5oBV//zAA/DK+5OL5hAHlAd+mJiveeGlfR+5n9lGNSJ2FcWToa+7JNXyzqGbNBB\nHfP4aFtF7B1QakVSIneDIyunIkUF8JK8DCO2tCS1j5d3eZ6r0plII1F5HjXRbEEY\nrEnrUrZXqBBMPuw4hnHuiaAZ4B/BQMVZy7Pe3agV6MxKSJHWUXaClDE4sutJrQfJ\n+MgxJPulAgMBAAECggEABWh9NCLhJMxPjZZgGzvttpmB50M1R2TS1oA30RMa0QtB\nCiGzRmBP9MS72Jd/cMgJn5XgOY0hexlFpn8IhjWS0bFLJoBToyvtZVih/PrKdAgT\nA108w2KOyjdxDDSHKuPhjajxdJqsJiSS4gx8R1lymiWg2DGY+yghw7IORnkFs1Vy\nXaRIqLthzvojlklC9XJJv+hChCxYmnggMPYRfleGN4qoD9Xpne2j9sjLwTJel8ZO\n8ne90PG7hvPkqAjQFF2Gob55l/tgQVucSb1uYHdGL5lsniedp21C4X8uMrW5rhVR\ntZvdoptrK/o3mMqQHdTdyweLjVRRTnElQ0V9/t93IQKBgQDnMUq95ExIXmfZhNwV\nVutYpc1UnsEpZKOXaxwn36soziHDpAB8pBI7GImjq0zGCZyKOicSK3T/8fPrxEj/\ngkUPvblHc+M8gcVduiNhRDhZIwyYy3UcY70J7FWI/efbGyT+qOIWej3xJ2fYlrpo\noOKYFS+7phyCeeUk6nR7bgznNQKBgQDADk5+0rh2vwpbPYDkhEoJrmLnOfb9jK4E\nZbpVWNCriciFVTmPEsCjFsINhy/okxwB5Vb4hztTh/yuxzziaa48Biw8cvms/TzT\nCiJrQ922OrtignNFRXuCWMLRKCGPZkfmJOh07rutvKh3jXOdOhIGNxsZsuzFC1rv\nCQN7wdigsQKBgBD26/4dJ3/T9Zjfh+rE8wYRPIzuDUyFRv/Qa0N9xSh8X7vkZ+i9\nfVz6wvbQlhSeFe+Krt1FdRNm5LgzMgwVug2apWLZ3R3Og/YJt5jmkZ/w03bOzywj\nIXb98ZTY1M+eIUvShqyRkcQFWThqbwlIbPgt7c++M69bVHYuAhggji/VAoGAMEMo\nHJyteEG3w4foHQTVaitldT/OvpacoEREF/Byt7ivKDprdXW77P/qEeY39tUJA7zz\nJw8srGgO6ojs1uTBwRm4AhTOg1c78rioP5ZVX9bQggfQGcdFK1NM2ayhCl0kkkQS\nGlhn11gCadClDgyqvN8aM1IQR8/7sPft5SqoWnECgYEAtR/qVHVOQr/Qi+CJPkx0\nqWx1Gxn9iqqeWJVzjg0vOli6MM/bl8/lDT9nLMSv7V3UeXVaXmk0OuRY61YvVd0g\n9jBDgS17QWG/QwnbPcM/narmQ4KRBwG4p5OZvs+FRI5zs6phyo/RZZRh2xqCqj3e\nsiyq/TGZ213/ShQJplA6sOg=\n-----END PRIVATE KEY-----\n",
-    "client_email": "firebase-adminsdk-ggvaa@sweetshop-2aac1.iam.gserviceaccount.com",
-    "client_id": "118147918374557346661",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ggvaa%40sweetshop-2aac1.iam.gserviceaccount.com"
-}
+var serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT)
 
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://sweetshop-2aac1-default-rtdb.firebaseio.com"
+    databaseURL: process.env.DATABASEURL
 });
 
-const bucket = admin.storage().bucket("gs://sweetshop-2aac1.appspot.com");
+const bucket = admin.storage().bucket(process.env.BUCKET);
 
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', "https://sweet-shop-react.herokuapp.com"],
     credentials: true
 }));
 
@@ -66,7 +55,7 @@ app.use(cors({
 app.use(morgan('dev'));
 
 
-app.use("/", express.static(path.resolve(path.join(__dirname, "front-end/build"))))
+app.use("/", express.static(path.resolve(path.join(__dirname, "./front-end/build"))))
 
 app.use('/auth', authRoutes);
 

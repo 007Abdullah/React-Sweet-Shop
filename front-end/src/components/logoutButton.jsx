@@ -2,12 +2,12 @@ import axios from 'axios';
 import { useGlobalStateUpdate } from "../context/globalContext";
 import { Button } from "react-bootstrap";
 import { useHistory } from 'react-router-dom';
-
+import url from './BaseUrl'
 
 function LogoutButton() {
     const history = useHistory();
 
-    let url = 'http://localhost:5000'
+    // let url = 'http://localhost:5000'
     const setGlobalState = useGlobalStateUpdate();
 
     function logout() {

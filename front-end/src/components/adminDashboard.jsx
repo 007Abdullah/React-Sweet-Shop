@@ -2,27 +2,37 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MDBContainer, MDBRow, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
 import moment from 'moment';
+import url from './BaseUrl';
 
-let url = 'http://localhost:5000'
+// let url = 'http://localhost:5000'
 
 function AdminDashboard() {
 
     const [data, setData] = useState([]);
+    const [toggle, settoggle] = useState(null);
+    const [message, setMessage] = useState('');
+
 
     useEffect(() => {
+
         axios({
             method: 'get',
             url: url + '/getorder',
             withCredentials: true
         }).then((response) => {
             // console.log(response.data.data, '======> what ')
-            console.log('why status come in ===>', response.data.data.status)
+            console.log('why status come in ===>', response.data.data)
             setData(response.data.data)
+            if (response.data.data.length === 0) {
+                setMessage("no orders found")
+            }
+
+
 
         }).catch((err) => {
             console.log(err)
         })
-    }, [])
+    }, [toggle])
     // Sir discuss  ----->
 
     // console.log('which come from server', data)
@@ -38,8 +48,9 @@ function AdminDashboard() {
             },
             withCredentials: true
         }).then((response) => {
+            settoggle(!toggle)
             alert(response.data.message)
-            
+
         }).catch((err) => {
             console.log(err)
         })
@@ -84,7 +95,11 @@ function AdminDashboard() {
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
-                            {data.map((eachItem, i) => (
+                            {data.length === null ? "loading" : null}
+                            {data.length === 0 ? message : null}
+
+
+                            {data && data.map((eachItem, i) => (
                                 <tr key={i}>
                                     <th >{eachItem._id}</th>
                                     <td>{eachItem.name}</td>

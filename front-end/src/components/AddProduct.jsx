@@ -3,14 +3,14 @@ import React from 'react'
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
-
+import url from './BaseUrl';
 import { useGlobalState } from "./../context/globalContext";
 
 import './admin.css';
 import fallback from './../images/image_1024.png';
 
 
-let url = 'http://localhost:5000'
+// let url = 'http://localhost:5000'
 
 export default function AddProduct() {
     const [data, setData] = useState([]);
