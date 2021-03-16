@@ -1,6 +1,5 @@
 const PORT = process.env.PORT || 5000;
 var express = require("express");
-var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require("cors");
 var morgan = require("morgan");
@@ -43,7 +42,7 @@ admin.initializeApp({
 const BUCKET = admin.storage().bucket(process.env.BUCKET);
 
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 
 app.use(cookieParser());
